@@ -1,0 +1,94 @@
+CREATE TABLE "User"(
+    id BIGINT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    User_name VARCHAR(255) NOT NULL,
+    `Password` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL
+);
+CREATE TABLE `Role`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `Role_name` VARCHAR(255) NOT NULL
+);
+CREATE TABLE `User_role`(
+    `user_id` BIGINT UNSIGNED NOT NULL,
+    `role_id` BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY(`user_id`,`role_id`)
+);
+
+CREATE TABLE `Premission`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `action` VARCHAR(255) NOT NULL
+);
+CREATE TABLE `Role_premission`(
+    `role_id` BIGINT UNSIGNED NOT NULL,
+    `premission_id` BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY(`role_id`,`premission_id`)
+);
+CREATE TABLE `Trip`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `route_id` BIGINT UNSIGNED NOT NULL,
+    `start_time` DATETIME NOT NULL,
+    `end_time` DATETIME NOT NULL,
+    `assigned_vehicle` BIGINT UNSIGNED NOT NULL
+);
+CREATE TABLE `Seat`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `assigned_vehicle` BIGINT UNSIGNED NOT NULL,
+    `is_booked` BOOLEAN NOT NULL
+);
+CREATE TABLE `Booking`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `user_id` BIGINT UNSIGNED NOT NULL,
+    `seat_id` BIGINT UNSIGNED NOT NULL,
+    `trip_id` BIGINT UNSIGNED NOT NULL
+);
+CREATE TABLE `Vehicle`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `vehicle_info` TEXT NOT NULL
+);
+CREATE TABLE `Stop`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) NOT NULL
+);
+CREATE TABLE `Route`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `travel_time` TIME NOT NULL,
+    `price` BIGINT NOT NULL
+);
+CREATE TABLE `Route_stop`(
+    `route_id` BIGINT UNSIGNED NOT NULL,
+    `stop_id` BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY(`route_id`,`stop_id`)
+);
+CREATE TABLE `Driver_vehicle`(
+    `driver_user_id` BIGINT UNSIGNED NOT NULL,
+    `vehicle_id` BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY(`driver_user_id`,`vehicle_id`)
+);
+ALTER TABLE
+    `Booking` ADD CONSTRAINT `booking_user_id_foreign` FOREIGN KEY(`user_id`) REFERENCES `User`(`id`);
+ALTER TABLE
+    `Route_stop` ADD CONSTRAINT `route_stop_route_id_foreign` FOREIGN KEY(`route_id`) REFERENCES `Route`(`id`);
+ALTER TABLE
+    `Driver_vehicle` ADD CONSTRAINT `driver_vehicle_vehicle_id_foreign` FOREIGN KEY(`vehicle_id`) REFERENCES `Vehicle`(`id`);
+ALTER TABLE
+    `User_role` ADD CONSTRAINT `user_role_user_id_foreign` FOREIGN KEY(`user_id`) REFERENCES `User`(`id`);
+ALTER TABLE
+    `User_role` ADD CONSTRAINT `role_id_foreign` FOREIGN KEY(`role_id`) REFERENCES `Role`(`id`);
+ALTER TABLE
+    `Role_premission` ADD CONSTRAINT `premission_id_foreign` FOREIGN KEY(`premission_id`) REFERENCES `Premission`(`id`);
+ALTER TABLE
+    `Seat` ADD CONSTRAINT `seat_assigned_vehicle_foreign` FOREIGN KEY(`assigned_vehicle`) REFERENCES `Vehicle`(`id`);
+ALTER TABLE
+    `Role_premission` ADD CONSTRAINT `role_premission_role_id_foreign` FOREIGN KEY(`role_id`) REFERENCES `Role`(`id`);
+ALTER TABLE
+    `Trip` ADD CONSTRAINT `trip_assigned_vehicle_foreign` FOREIGN KEY(`assigned_vehicle`) REFERENCES `Vehicle`(`id`);
+ALTER TABLE
+    `Trip` ADD CONSTRAINT `trip_route_id_foreign` FOREIGN KEY(`route_id`) REFERENCES `Route`(`id`);
+ALTER TABLE
+    `Route_stop` ADD CONSTRAINT `route_stop_stop_id_foreign` FOREIGN KEY(`stop_id`) REFERENCES `Stop`(`id`);
+ALTER TABLE
+    `Booking` ADD CONSTRAINT `booking_trip_id_foreign` FOREIGN KEY(`trip_id`) REFERENCES `Trip`(`id`);
+ALTER TABLE
+    `Booking` ADD CONSTRAINT `booking_seat_id_foreign` FOREIGN KEY(`seat_id`) REFERENCES `Seat`(`id`);
+ALTER TABLE
+    `Driver_vehicle` ADD CONSTRAINT `driver_vehicle_driver_user_id_foreign` FOREIGN KEY(`driver_user_id`) REFERENCES `User`(`id`);
