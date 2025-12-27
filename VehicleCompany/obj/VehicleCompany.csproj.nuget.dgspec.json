@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\VehicleCompany.csproj": {}
+    "C:\\Users\\der11\\OneDrive\\Документы\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\VehicleCompany.csproj": {}
   },
   "projects": {
-    "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\VehicleCompany.csproj": {
+    "C:\\Users\\der11\\OneDrive\\Документы\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\VehicleCompany.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\VehicleCompany.csproj",
+        "projectUniqueName": "C:\\Users\\der11\\OneDrive\\Документы\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\VehicleCompany.csproj",
         "projectName": "VehicleCompany",
-        "projectPath": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\VehicleCompany.csproj",
+        "projectPath": "C:\\Users\\der11\\OneDrive\\Документы\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\VehicleCompany.csproj",
         "packagesPath": "C:\\Users\\der11\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\obj\\",
+        "outputPath": "C:\\Users\\der11\\OneDrive\\Документы\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -58,9 +59,19 @@
               "target": "Package",
               "version": "[9.0.0, )"
             },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
             "Microsoft.SqlServer.Server": {
               "target": "Package",
               "version": "[1.0.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.22, )"
             },
             "MySql.Data": {
               "target": "Package",

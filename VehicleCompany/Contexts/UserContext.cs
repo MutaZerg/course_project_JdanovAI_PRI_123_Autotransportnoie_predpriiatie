@@ -13,7 +13,7 @@ namespace VehicleCompany.Contexts
 
 
         }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Users> Users { get; set; }
 
     }
 }
