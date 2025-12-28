@@ -50,6 +50,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "FluentMigrator.Runner.MySql": {
+              "target": "Package",
+              "version": "[7.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.10, )"
@@ -73,6 +77,10 @@
               "version": "[8.0.22, )"
             },
             "MySql.Data": {
+              "target": "Package",
+              "version": "[9.5.0, )"
+            },
+            "MySql.Data.EntityFramework": {
               "target": "Package",
               "version": "[9.5.0, )"
             },
