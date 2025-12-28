@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using VehicleCompany.Contexts;
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<UserContext>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<UserContext>(Options => Options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
 
 var app = builder.Build();
 

@@ -22,7 +22,7 @@ namespace VehicleCompany.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            return View(await _context.User.ToListAsync());
         }
 
         // GET: Users/Details/5
@@ -33,13 +33,13 @@ namespace VehicleCompany.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _context.User
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
             }
-                
+
             return View(user);
         }
 
@@ -54,7 +54,7 @@ namespace VehicleCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,User_name,Password,Email")] Users user)
+        public async Task<IActionResult> Create([Bind("Id,User_name,Password,Email")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace VehicleCompany.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.User.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace VehicleCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,User_name,Password,Email")] Users user)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,User_name,Password,Email")] User user)
         {
             if (id != user.Id)
             {
@@ -124,7 +124,7 @@ namespace VehicleCompany.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _context.User
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -139,10 +139,10 @@ namespace VehicleCompany.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.User.FindAsync(id);
             if (user != null)
             {
-                _context.Users.Remove(user);
+                _context.User.Remove(user);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace VehicleCompany.Controllers
 
         private bool UserExists(long id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return _context.User.Any(e => e.Id == id);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace VehicleCompany.Models
 {
-    public class Users
+    public class User
     {
         public long Id { get; set; }
         public string User_name { get; set; }

@@ -9,7 +9,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[VehicleCompany.Models.Users, VehicleCompany, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[VehicleCompany.Models.User, VehicleCompany, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -29,13 +29,13 @@
     "Parameters": [
       {
         "Name": "users",
-        "Type": "VehicleCompany.Models.Users",
+        "Type": "VehicleCompany.Models.User",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "VehicleCompany.Models.Users",
+        "Type": "VehicleCompany.Models.User",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -61,7 +61,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "VehicleCompany.Models.Users",
+        "Type": "VehicleCompany.Models.User",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -86,7 +86,7 @@
       },
       {
         "Name": "users",
-        "Type": "VehicleCompany.Models.Users",
+        "Type": "VehicleCompany.Models.User",
         "IsRequired": true
       }
     ],

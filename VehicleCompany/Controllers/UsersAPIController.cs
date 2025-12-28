@@ -23,16 +23,16 @@ namespace VehicleCompany.Controllers
 
         // GET: api/UsersAPI
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.User.ToListAsync();
         }
 
         // GET: api/UsersAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Users>> GetUsers(long id)
+        public async Task<ActionResult<User>> GetUsers(long id)
         {
-            var users = await _context.Users.FindAsync(id);
+            var users = await _context.User.FindAsync(id);
 
             if (users == null)
             {
@@ -45,7 +45,7 @@ namespace VehicleCompany.Controllers
         // PUT: api/UsersAPI/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsers(long id, Users users)
+        public async Task<IActionResult> PutUsers(long id, User users)
         {
             if (id != users.Id)
             {
@@ -76,9 +76,9 @@ namespace VehicleCompany.Controllers
         // POST: api/UsersAPI
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Users>> PostUsers(Users users)
+        public async Task<ActionResult<User>> PostUsers(User users)
         {
-            _context.Users.Add(users);
+            _context.User.Add(users);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUsers", new { id = users.Id }, users);
@@ -88,13 +88,13 @@ namespace VehicleCompany.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsers(long id)
         {
-            var users = await _context.Users.FindAsync(id);
+            var users = await _context.User.FindAsync(id);
             if (users == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(users);
+            _context.User.Remove(users);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace VehicleCompany.Controllers
 
         private bool UsersExists(long id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return _context.User.Any(e => e.Id == id);
         }
     }
 }
