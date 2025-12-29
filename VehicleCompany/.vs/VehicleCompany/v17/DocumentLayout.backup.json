@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\route.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\route.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\trip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\trip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\routes\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\routes\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -23,16 +35,8 @@
       "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:contexts\\usercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\route.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\route.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\vehicle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\vehicle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\trip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\trip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\stop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -98,24 +102,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Routes\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\Routes\\Create.cshtml",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Routes\\Create.cshtml",
+              "RelativeToolTip": "Views\\Routes\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-28T19:22:57.382Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB8AAABuAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACUAAABuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-28T18:17:01.33Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Booking.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Booking.cs",
               "RelativeDocumentMoniker": "Models\\Booking.cs",
@@ -123,12 +140,11 @@
               "RelativeToolTip": "Models\\Booking.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T16:38:50.521Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T16:38:50.521Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Vehicle.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Vehicle.cs",
               "RelativeDocumentMoniker": "Models\\Vehicle.cs",
@@ -136,12 +152,11 @@
               "RelativeToolTip": "Models\\Vehicle.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T16:37:32.964Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T16:37:32.964Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Role.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Role.cs",
               "RelativeDocumentMoniker": "Models\\Role.cs",
@@ -149,38 +164,37 @@
               "RelativeToolTip": "Models\\Role.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T16:37:10.309Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T16:37:10.309Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "Route.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Route.cs",
               "RelativeDocumentMoniker": "Models\\Route.cs",
-              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Route.cs",
-              "RelativeToolTip": "Models\\Route.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Route.cs*",
+              "RelativeToolTip": "Models\\Route.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-28T16:35:23.115Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "Trip.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Trip.cs",
               "RelativeDocumentMoniker": "Models\\Trip.cs",
               "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Trip.cs",
               "RelativeToolTip": "Models\\Trip.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-28T16:34:56.781Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Stop.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Stop.cs",
               "RelativeDocumentMoniker": "Models\\Stop.cs",
@@ -188,12 +202,11 @@
               "RelativeToolTip": "Models\\Stop.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T16:34:43.582Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T16:34:43.582Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\User.cs",
               "RelativeDocumentMoniker": "Models\\User.cs",
@@ -201,12 +214,11 @@
               "RelativeToolTip": "Models\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T13:21:54.749Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T13:21:54.749Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
@@ -214,12 +226,11 @@
               "RelativeToolTip": "Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-28T10:54:19.241Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T10:54:19.241Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "Models\\ErrorViewModel.cs",
@@ -227,12 +238,11 @@
               "RelativeToolTip": "Models\\ErrorViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T16:41:50.163Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T16:41:50.163Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "UserContext.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Contexts\\UserContext.cs",
               "RelativeDocumentMoniker": "Contexts\\UserContext.cs",
@@ -240,12 +250,11 @@
               "RelativeToolTip": "Contexts\\UserContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-25T04:00:14.693Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-25T04:00:14.693Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "ValuesController.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\ValuesController.cs",
               "RelativeDocumentMoniker": "Controllers\\ValuesController.cs",
@@ -253,12 +262,11 @@
               "RelativeToolTip": "Controllers\\ValuesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T16:44:36.733Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T16:44:36.733Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
@@ -266,12 +274,11 @@
               "RelativeToolTip": "Controllers\\UsersController.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAowDEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T13:26:42.839Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T13:26:42.839Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -279,12 +286,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAB8AAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-10T20:04:33.995Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-10T20:04:33.995Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Vehicles\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Vehicles\\Index.cshtml",
@@ -292,12 +298,11 @@
               "RelativeToolTip": "Views\\Vehicles\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-28T18:18:43.208Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T18:18:43.208Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "UsersAPIController.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\UsersAPIController.cs",
               "RelativeDocumentMoniker": "Controllers\\UsersAPIController.cs",
@@ -309,7 +314,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "Views\\_ViewStart.cshtml",
@@ -321,7 +326,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "Views\\_ViewImports.cshtml",
@@ -333,7 +338,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -345,7 +350,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "TextFile1.txt",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\TextFile1.txt",
               "RelativeDocumentMoniker": "TextFile1.txt",
@@ -357,7 +362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
@@ -369,7 +374,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",

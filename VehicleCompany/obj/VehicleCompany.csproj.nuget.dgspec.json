@@ -96,6 +96,10 @@
               "target": "Package",
               "version": "[2.5.0, )"
             },
+            "NUnit": {
+              "target": "Package",
+              "version": "[4.4.0, )"
+            },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[9.0.0, )"
