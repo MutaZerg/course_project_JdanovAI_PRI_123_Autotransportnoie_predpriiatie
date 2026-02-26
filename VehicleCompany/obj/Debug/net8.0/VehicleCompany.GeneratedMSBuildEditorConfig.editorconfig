@@ -28,6 +28,22 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Accounts/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcQWNjZXNzRGVuaWVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Accounts/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Authorization/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aG9yaXphdGlvblxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Authorization/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aG9yaXphdGlvblxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Bookings/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ3NcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -78,6 +94,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Shared/_ValidationScriptsPartial.cshtml]

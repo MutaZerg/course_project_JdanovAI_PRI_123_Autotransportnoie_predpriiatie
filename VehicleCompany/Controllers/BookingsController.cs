@@ -47,6 +47,7 @@ namespace VehicleCompany.Controllers
         public IActionResult Create()
         {
             return View();
+            
         }
 
         // POST: Bookings/Create
