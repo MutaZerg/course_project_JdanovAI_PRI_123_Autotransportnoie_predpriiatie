@@ -1,4 +1,11 @@
-п»ї<!DOCTYPE html>
+@{
+    var userPermissions = User.Claims
+        .Where(c => c.Type == "Permission")
+        .Select(c => c.Value)
+        .ToList();
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,24 +27,52 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        @if (userPermissions.Contains("view_routes"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Routes" asp-action="Index">Маршруты</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Routes" asp-action="Index">Routes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Trips" asp-action="Index">Trips</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Stops" asp-action="Index">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Privacy</a>
-                        </li>
+                        }
+                        @if (userPermissions.Contains("view_trips"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Trips" asp-action="Index">Поездки</a>
+                            </li>
+                        }
+                        @if (userPermissions.Contains("view_stops"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Stops" asp-action="Index">Остоновки</a>
+                            </li>
+                        }
+                        @if (userPermissions.Contains("edit_vehicle"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Index">Машины</a>
+                            </li>
+                        }
+                        @if (userPermissions.Contains("edit_vehicle"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Seats" asp-action="Index">Места</a>
+                            </li>
+                        }
+                        @if (userPermissions.Contains("edit_booking"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="Index">Бронь</a>
+                            </li>
+                        }
+                        @if (userPermissions.Contains("edit_user"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Пользователи</a>
+                            </li>
+                        }
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
@@ -50,7 +85,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - VehicleCompany - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - VehicleCompany
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

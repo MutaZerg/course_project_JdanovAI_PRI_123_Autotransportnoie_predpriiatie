@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using VehicleCompany.Contexts;
 using VehicleCompany.Models;
 using Route = VehicleCompany.Models.Route;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VehicleCompany.Controllers
 {
+    [Authorize]
     public class RoutesController : Controller
     {
         private readonly UserContext _context;
@@ -35,6 +37,8 @@ namespace VehicleCompany.Controllers
             }
 
             var route = await _context.Route
+                .Include(r => r.RouteStops)
+                .ThenInclude(rs => rs.Stop)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (route == null)
             {
@@ -42,6 +46,35 @@ namespace VehicleCompany.Controllers
             }
 
             return View(route);
+        }
+
+        /// <summary>Book a trip: shows all trips on this route and available seats per trip.</summary>
+        [HttpGet]
+        public async Task<IActionResult> BookTrip(long? id)
+        {
+            if (id == null) return NotFound();
+            var route = await _context.Route
+                .Include(r => r.RouteStops)
+                .ThenInclude(rs => rs.Stop)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (route == null) return NotFound();
+
+            var trips = await _context.Trip
+                .Where(t => t.Route_id == id.Value)
+                .OrderBy(t => t.Start_time)
+                .ToListAsync();
+
+            var vm = new BookTripViewModel { Route = route };
+            foreach (var trip in trips)
+            {
+                var seats = await _context.Seat
+                    .Where(s => s.AssignedVehicleId == trip.Assigned_vehicle && !s.IsBooked)
+                    .OrderBy(s => s.Id)
+                    .ToListAsync();
+                vm.TripsWithSeats.Add(new TripSeatsViewModel { Trip = trip, AvailableSeats = seats });
+            }
+
+            return View(vm);
         }
 
         // GET: Routes/Create

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +25,7 @@ namespace VehicleCompany.Controllers
         public IActionResult Login(string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return View("~/Views/Accounts/Login.cshtml");
         }
 
         [HttpPost]
@@ -99,7 +99,7 @@ namespace VehicleCompany.Controllers
                 ModelState.AddModelError(string.Empty, "Неверное имя пользователя или пароль.");
             }
 
-            return View(model);
+            return View("~/Views/Accounts/Login.cshtml", model);
         }
 
         //[HttpPost]
@@ -137,13 +137,13 @@ namespace VehicleCompany.Controllers
                 return NotFound();
             }
 
-            return View(userSession);
+            return View("~/Views/Accounts/Profile.cshtml", userSession);
         }
 
         [HttpGet]
         public IActionResult AccessDenied()
         {
-            return View();
+            return View("~/Views/Accounts/AccessDenied.cshtml");
         }
     }
 }

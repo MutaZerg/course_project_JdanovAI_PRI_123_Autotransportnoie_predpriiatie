@@ -1,43 +1,46 @@
-﻿@model VehicleCompany.Models.Booking
+@model VehicleCompany.Models.Booking
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Booking";
+    var fromBookTrip = Model.Trip_id > 0 && Model.Seat_id > 0;
 }
 
-<h1>Create</h1>
-
-<h4>Booking</h4>
+<h1>@(fromBookTrip ? "Confirm booking" : "Create Booking")</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="User_id" />
+            <input type="hidden" asp-for="Trip_id" />
+            <input type="hidden" asp-for="Seat_id" />
+            @if (fromBookTrip)
+            {
+                <p class="text-muted">Trip ID: @Model.Trip_id, Seat ID: @Model.Seat_id. Your account will be linked to this booking.</p>
+            }
+            else
+            {
+                <div class="form-group mb-2">
+                    <label asp-for="User_id" class="control-label"></label>
+                    <input asp-for="User_id" class="form-control" />
+                    <span asp-validation-for="User_id" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="Seat_id" class="control-label"></label>
+                    <input asp-for="Seat_id" class="form-control" />
+                    <span asp-validation-for="Seat_id" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="Trip_id" class="control-label"></label>
+                    <input asp-for="Trip_id" class="form-control" />
+                    <span asp-validation-for="Trip_id" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
-                <label asp-for="User_id" class="control-label"></label>
-                <input asp-for="User_id" class="form-control" />
-                <span asp-validation-for="User_id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Seat_id" class="control-label"></label>
-                <input asp-for="Seat_id" class="form-control" />
-                <span asp-validation-for="Seat_id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Trip_id" class="control-label"></label>
-                <input asp-for="Trip_id" class="form-control" />
-                <span asp-validation-for="Trip_id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="@(fromBookTrip ? "Confirm booking" : "Create")" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<div><a asp-action="Index">Back to List</a></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

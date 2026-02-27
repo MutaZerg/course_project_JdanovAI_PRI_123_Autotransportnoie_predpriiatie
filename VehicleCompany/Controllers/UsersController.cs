@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using VehicleCompany.Attributes;
 using VehicleCompany.Contexts;
 using VehicleCompany.Models;
 
 namespace VehicleCompany.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly UserContext _context;
@@ -20,12 +23,14 @@ namespace VehicleCompany.Controllers
         }
 
         // GET: Users
+        //[Permission("users.view")]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.Users.ToListAsync());
         }
 
         // GET: Users/Details/5
+        [Permission("users.details")]
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -33,7 +38,7 @@ namespace VehicleCompany.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -44,6 +49,7 @@ namespace VehicleCompany.Controllers
         }
 
         // GET: Users/Create
+        [Permission("create_user")]
         public IActionResult Create()
         {
             return View();
@@ -54,7 +60,8 @@ namespace VehicleCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,User_name,Password,Email")] User user)
+        [Permission("create_user")]
+        public async Task<IActionResult> Create([Bind("Id,UserName,Password,Email")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -66,6 +73,7 @@ namespace VehicleCompany.Controllers
         }
 
         // GET: Users/Edit/5
+        [Permission("users.edit_user")]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -73,7 +81,7 @@ namespace VehicleCompany.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -86,7 +94,8 @@ namespace VehicleCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,User_name,Password,Email")] User user)
+        [Permission("users.edit_user")]
+        public async Task<IActionResult> Edit(long id, [Bind("Id,UserName,Password,Email")] User user)
         {
             if (id != user.Id)
             {
@@ -117,6 +126,7 @@ namespace VehicleCompany.Controllers
         }
 
         // GET: Users/Delete/5
+        [Permission("users.delete")]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -124,7 +134,7 @@ namespace VehicleCompany.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -137,12 +147,13 @@ namespace VehicleCompany.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Permission("users.delete")]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user != null)
             {
-                _context.User.Remove(user);
+                _context.Users.Remove(user);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +162,7 @@ namespace VehicleCompany.Controllers
 
         private bool UserExists(long id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Users.Any(e => e.Id == id);
         }
     }
 }

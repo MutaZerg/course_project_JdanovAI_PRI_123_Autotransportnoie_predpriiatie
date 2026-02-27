@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,14 +25,14 @@ namespace VehicleCompany.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.User.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         // GET: api/UsersAPI/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUsers(long id)
         {
-            var users = await _context.User.FindAsync(id);
+            var users = await _context.Users.FindAsync(id);
 
             if (users == null)
             {
@@ -78,7 +78,7 @@ namespace VehicleCompany.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUsers(User users)
         {
-            _context.User.Add(users);
+            _context.Users.Add(users);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUsers", new { id = users.Id }, users);
@@ -88,13 +88,13 @@ namespace VehicleCompany.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsers(long id)
         {
-            var users = await _context.User.FindAsync(id);
+            var users = await _context.Users.FindAsync(id);
             if (users == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(users);
+            _context.Users.Remove(users);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace VehicleCompany.Controllers
 
         private bool UsersExists(long id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Users.Any(e => e.Id == id);
         }
     }
 }

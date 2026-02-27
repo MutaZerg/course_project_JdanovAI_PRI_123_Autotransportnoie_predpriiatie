@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,6 +11,6 @@ namespace VehicleCompany.Models
         public required System.TimeSpan Travel_time { get; set; }
         public required long Price { get; set; }
 
-        public ICollection<Stop> Stops { get; set; }
+        public ICollection<RouteStop> RouteStops { get; set; } = new List<RouteStop>();
     }
 }

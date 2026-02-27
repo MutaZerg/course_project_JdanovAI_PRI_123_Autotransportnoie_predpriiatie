@@ -36,6 +36,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Accounts/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Authorization/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aG9yaXphdGlvblxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -72,6 +76,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Routes/BookTrip.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGVzXEJvb2tUcmlwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Routes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGVzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -90,6 +98,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Routes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Seats/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Seats/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhdHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Seats/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Seats/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Seats/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhdHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/der11/Documents/GitHub/course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie/VehicleCompany/Views/Shared/Error.cshtml]

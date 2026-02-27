@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using VehicleCompany.Attributes;
 using VehicleCompany.Contexts;
 using VehicleCompany.Models;
 
 namespace VehicleCompany.Controllers
 {
+    [Authorize]
     public class TripsController : Controller
     {
         private readonly UserContext _context;
@@ -20,6 +23,7 @@ namespace VehicleCompany.Controllers
         }
 
         // GET: Trips
+        [Permission("tasks.view")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Trip.ToListAsync());

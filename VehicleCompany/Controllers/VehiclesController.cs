@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VehicleCompany.Contexts;
 using VehicleCompany.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VehicleCompany.Controllers
 {
+    [Authorize]
     public class VehiclesController : Controller
     {
         private readonly UserContext _context;
@@ -54,7 +56,7 @@ namespace VehicleCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Vehicle_info")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("Vehicle_info")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {

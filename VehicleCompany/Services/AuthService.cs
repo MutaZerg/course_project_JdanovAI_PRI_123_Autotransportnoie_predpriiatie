@@ -1,10 +1,5 @@
-﻿using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Crypto.Generators;
 using VehicleCompany.Contexts;
-using VehicleCompany.Models;
-using VehicleCompany.Services;
-//using VehicleCompany.Contexts;
 using VehicleCompany.Models;
 
 namespace VehicleCompany.Services
@@ -28,9 +23,41 @@ namespace VehicleCompany.Services
             if (user == null)
                 return null;
 
-            // Verify password using BCrypt
-            if (!BCrypt.Verify(password, user.Password))
-                return null;
+            var storedPassword = user.Password ?? string.Empty;
+
+            // Valid BCrypt hashes start with $2a$, $2b$, or $2y$
+            if (storedPassword.StartsWith("$2a$", StringComparison.Ordinal) ||
+                storedPassword.StartsWith("$2b$", StringComparison.Ordinal) ||
+                storedPassword.StartsWith("$2y$", StringComparison.Ordinal))
+            {
+                try
+                {
+                    if (!BCrypt.Net.BCrypt.Verify(password, storedPassword))
+                        return null;
+                }
+                catch (Exception ex)
+                {
+                    // Invalid salt/hash format (e.g. different BCrypt library or corrupted data)
+                    _logger.LogWarning(ex, "BCrypt verify failed for user {UserName}. Stored hash may be invalid or from another library.", username);
+                    return null;
+                }
+            }
+            else
+            {
+                // Not a BCrypt hash (e.g. plain text or other format) — compare as plain text for backward compatibility
+                if (password != storedPassword)
+                    return null;
+                // Optionally re-hash with BCrypt and save so next login uses BCrypt
+                try
+                {
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(password);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Could not upgrade password to BCrypt for user {UserName}. Login still allowed.", username);
+                }
+            }
 
             return user;
         }

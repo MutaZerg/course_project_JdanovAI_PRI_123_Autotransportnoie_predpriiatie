@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VehicleCompany.Contexts;
 using VehicleCompany.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VehicleCompany.Controllers
 {
+    [Authorize]
     public class StopsController : Controller
     {
         private readonly UserContext _context;

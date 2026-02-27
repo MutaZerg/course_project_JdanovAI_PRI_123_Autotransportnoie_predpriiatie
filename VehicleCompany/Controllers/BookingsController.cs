@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VehicleCompany.Contexts;
 using VehicleCompany.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VehicleCompany.Controllers
 {
+    [Authorize]
     public class BookingsController : Controller
     {
         private readonly UserContext _context;
@@ -43,11 +43,17 @@ namespace VehicleCompany.Controllers
             return View(booking);
         }
 
-        // GET: Bookings/Create
-        public IActionResult Create()
+        // GET: Bookings/Create?tripId=1&seatId=2 — booking menu from "Book a trip" flow
+        [Authorize]
+        public IActionResult Create(long? tripId, long? seatId)
         {
-            return View();
-            
+            var booking = new Booking { Id = 0, Trip_id = 0, Seat_id = 0, User_id = 0 };
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrEmpty(userIdClaim) && long.TryParse(userIdClaim, out var userId))
+                booking.User_id = userId;
+            if (tripId.HasValue) booking.Trip_id = tripId.Value;
+            if (seatId.HasValue) booking.Seat_id = seatId.Value;
+            return View(booking);
         }
 
         // POST: Bookings/Create
@@ -55,12 +61,19 @@ namespace VehicleCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,User_id,Seat_id,Trip_id")] Booking booking)
+        [Authorize]
+        public async Task<IActionResult> Create([Bind("User_id,Seat_id,Trip_id")] Booking booking)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
+                var seat = await _context.Seat.FindAsync(booking.Seat_id);
+                if (seat != null)
+                {
+                    seat.IsBooked = true;
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(booking);

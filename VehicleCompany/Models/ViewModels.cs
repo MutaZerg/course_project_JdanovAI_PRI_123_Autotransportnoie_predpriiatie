@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace YourApp.Models
+namespace VehicleCompany.Models
 {
     public class LoginViewModel
     {
@@ -26,5 +26,18 @@ namespace YourApp.Models
         public string Email { get; set; } = string.Empty;
         public List<string> Roles { get; set; } = new List<string>();
         public List<string> Permissions { get; set; } = new List<string>();
+    }
+
+    /// <summary>View model for Book Trip page: route with its trips and available seats per trip.</summary>
+    public class BookTripViewModel
+    {
+        public Route Route { get; set; } = null!;
+        public List<TripSeatsViewModel> TripsWithSeats { get; set; } = new List<TripSeatsViewModel>();
+    }
+
+    public class TripSeatsViewModel
+    {
+        public Trip Trip { get; set; } = null!;
+        public List<Seat> AvailableSeats { get; set; } = new List<Seat>();
     }
 }
