@@ -1,0 +1,105 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Регистрация";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-gradient-primary text-white text-center py-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h3 class="mb-0 font-weight-bold">@ViewData["Title"]</h3>
+                    <p class="mb-0 mt-2 text-white-50">Создайте новый аккаунт</p>
+                </div>
+                <div class="card-body p-4">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="Register" method="post" id="registerForm">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert" style="display: none;"></div>
+
+                        <!-- Имя пользователя -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="UserName" class="form-control" placeholder="ivan123" 
+                                   autocomplete="username" aria-required="true" />
+                            <label asp-for="UserName">
+                                <i class="bi bi-person"></i> @Html.DisplayNameFor(m => m.UserName)
+                            </label>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                            <div class="invalid-feedback" id="userNameFeedback"></div>
+                            <small class="form-text text-muted">
+                                Только буквы, цифры и подчеркивание (от 3 до 50 символов)
+                            </small>
+                        </div>
+
+                        <!-- Email (заглушка) -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control" placeholder="name@example.com" 
+                                   autocomplete="email" aria-required="true" />
+                            <label asp-for="Email">
+                                <i class="bi bi-envelope"></i> @Html.DisplayNameFor(m => m.Email)
+                            </label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <div class="invalid-feedback" id="emailFeedback"></div>
+                        </div>
+
+                        <!-- Пароль -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Password" class="form-control" placeholder="Пароль" 
+                                   autocomplete="new-password" aria-required="true" />
+                            <label asp-for="Password">
+                                <i class="bi bi-lock"></i> @Html.DisplayNameFor(m => m.Password)
+                            </label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <div class="password-strength mt-2">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 0%;" id="passwordStrength"></div>
+                                </div>
+                                <small class="text-muted" id="passwordHint">
+                                    Пароль должен содержать заглавные, строчные буквы и цифры (мин. 6 символов)
+                                </small>
+                            </div>
+                        </div>
+
+                        <!-- Подтверждение пароля -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Подтверждение пароля" 
+                                   autocomplete="new-password" aria-required="true" />
+                            <label asp-for="ConfirmPassword">
+                                <i class="bi bi-lock-fill"></i> @Html.DisplayNameFor(m => m.ConfirmPassword)
+                            </label>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            <div class="password-match-indicator mt-1" id="passwordMatch"></div>
+                        </div>
+
+
+                        <!-- Кнопка регистрации -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg" id="registerButton">
+                                <i class="bi bi-person-plus"></i> Зарегистрироваться
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Разделитель -->
+                    <div class="text-center my-3">
+                        <span class="text-muted">или</span>
+                    </div>
+
+                    <!-- Ссылка на вход -->
+                    <div class="text-center">
+                        <p class="mb-0">
+                            Уже есть аккаунт? <a asp-action="Login" class="text-primary fw-bold">Войдите</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

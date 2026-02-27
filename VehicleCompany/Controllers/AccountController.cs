@@ -102,6 +102,43 @@ namespace VehicleCompany.Controllers
             return View("~/Views/Accounts/Login.cshtml", model);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register(string? returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View("~/Views/Accounts/Registration.cshtml");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _authService.RegisterAsync(model);
+
+                if (result.Success)
+                {
+                    // Автоматический вход после регистрации
+                    await SignInUserAsync(result.User!);
+
+                    TempData["SuccessMessage"] = "Регистрация прошла успешно!";
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                }
+            }
+
+            return View("~/Views/Accounts/Registration.cshtml", model);
+        }
+
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public async Task<IActionResult> Logout()
@@ -144,6 +181,37 @@ namespace VehicleCompany.Controllers
         public IActionResult AccessDenied()
         {
             return View("~/Views/Accounts/AccessDenied.cshtml");
+        }
+        private async Task SignInUserAsync(User user)
+        {
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Name, user.UserName),
+        new Claim(ClaimTypes.Email, user.Email)
+    };
+
+            // Добавляем роль по умолчанию
+            var userRoles = await _authService.GetUserRolesAsync(user.Id);
+            foreach (var role in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                new AuthenticationProperties
+                {
+                    IsPersistent = false,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8)
+                });
+
+            HttpContext.Session.SetString("UserId", user.Id.ToString());
+            HttpContext.Session.SetString("UserName", user.UserName);
         }
     }
 }

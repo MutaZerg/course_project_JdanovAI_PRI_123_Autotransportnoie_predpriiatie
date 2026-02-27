@@ -130,5 +130,86 @@ namespace VehicleCompany.Services
 
             return roles;
         }
+
+        public async Task<RegisterResult> RegisterAsync(RegisterViewModel model)
+        {
+            var result = new RegisterResult();
+
+            try
+            {
+                
+                // Проверка существования пользователя
+                var existingUser = await _context.Users
+                    .FirstOrDefaultAsync(u => u.UserName == model.UserName);
+
+                if (existingUser != null)
+                {
+                    _logger.LogInformation("Пользователь с таким именем уже существует", "as");
+                    result.Errors.Add("Пользователь с таким именем уже существует");
+                    return result;
+                }
+
+                // Проверка email (если используете)
+                var existingEmail = await _context.Users
+                    .FirstOrDefaultAsync(u => u.Email == model.Email);
+
+                if (existingEmail != null)
+                {
+                    _logger.LogInformation("Пользователь с таким email уже существует", "as");
+                    result.Errors.Add("Пользователь с таким email уже существует");
+                    return result;
+                }
+
+                // Создание нового пользователя
+                var user = new User
+                {
+                    UserName = model.UserName,
+                    Email = model.Email, // Заглушка
+                    Password = model.Password
+                };
+                _logger.LogInformation("Пользователь cjplf", "as");
+
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+
+                // Назначение роли по умолчанию (например, "User")
+                var defaultRole = await _context.Roles
+                    .FirstOrDefaultAsync(r => r.RoleName == "User");
+
+                if (defaultRole != null)
+                {
+                    _context.UserRoles.Add(new UserRole
+                    {
+                        UserId = user.Id,
+                        RoleId = defaultRole.Id
+                    });
+                    await _context.SaveChangesAsync();
+                }
+
+                _logger.LogInformation("Новый пользователь зарегистрирован: {UserName}", user.UserName);
+
+                result.Success = true;
+                result.Message = "Регистрация прошла успешно";
+                result.User = user;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при регистрации пользователя");
+                result.Errors.Add("Произошла ошибка при регистрации");
+            }
+
+            return result;
+        }
+
+        public async Task<bool> ValidateUserNameAsync(string userName)
+        {
+            return !await _context.Users.AnyAsync(u => u.UserName == userName);
+        }
+
+        public async Task<bool> ValidateEmailAsync(string email)
+        {
+            return !await _context.Users.AnyAsync(u => u.Email == email);
+        }
+
     }
 }

@@ -23,8 +23,52 @@ namespace VehicleCompany.Controllers
         }
 
         // GET: Routes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder,
+            string sortBy,
+            string searchString,
+            int? pageNumber,
+            int pageSize = 10)
         {
+            ViewBag.CurrentSortOrder = sortOrder;
+            ViewBag.CurrentSortBy = sortBy;
+            ViewBag.CurrentFilter = searchString;
+            ViewBag.PageNumber = pageNumber ?? 1;
+
+            var routes = _context.Route
+                .Include(r => r.RouteStops)
+                    .ThenInclude(rs => rs.Stop)
+                .AsQueryable();
+
+            // Поиск по названию остановки
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                routes = routes.Where(r => r.RouteStops
+                    .Any(rs => rs.Stop.Name.Contains(searchString)));
+            }
+
+            // Сортировка
+            routes = sortBy switch
+            {
+                "travel_time" => sortOrder == "asc"
+                    ? routes.OrderBy(r => r.Travel_time)
+                    : routes.OrderByDescending(r => r.Travel_time),
+                "price" => sortOrder == "asc"
+                    ? routes.OrderBy(r => r.Price)
+                    : routes.OrderByDescending(r => r.Price),
+                "stops" => sortOrder == "asc"
+                    ? routes.OrderBy(r => r.RouteStops.Count)
+                    : routes.OrderByDescending(r => r.RouteStops.Count),
+                _ => routes.OrderBy(r => r.Id)
+            };
+
+            // Пагинация
+            var totalItems = await routes.CountAsync();
+            ViewBag.TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var items = await routes
+                .Skip(((pageNumber ?? 1) - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
             return View(await _context.Route.ToListAsync());
         }
 
@@ -106,8 +150,27 @@ namespace VehicleCompany.Controllers
             {
                 return NotFound();
             }
-
             var route = await _context.Route.FindAsync(id);
+            if (route.RouteStops != null)
+            {
+                route.RouteStops = route.RouteStops
+                    .OrderBy(rs => rs.stop_number)
+                    .ToList();
+            }
+            var availableStops = await _context.Stop
+                .OrderBy(s => s.Name)
+                .ToListAsync();
+
+            // Получаем ID выбранных остановок в правильном порядке
+            var selectedStopIds = route.RouteStops?
+                .OrderBy(rs => rs.stop_number)
+                .Select(rs => rs.StopId)
+                .ToList() ?? new List<long>();
+
+            ViewBag.AvailableStops = availableStops;
+            ViewBag.SelectedStopIds = selectedStopIds;
+
+            
             if (route == null)
             {
                 return NotFound();
@@ -118,9 +181,42 @@ namespace VehicleCompany.Controllers
         // POST: Routes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(long id, [Bind("Id,Travel_time,Price")] Route route)
+        //{
+        //    if (id != route.Id)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(route);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!RouteExists(route.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(route);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Travel_time,Price")] Route route)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Travel_time,Price")] Route route, Dictionary<int, long> SelectedStops)
         {
             if (id != route.Id)
             {
@@ -131,8 +227,30 @@ namespace VehicleCompany.Controllers
             {
                 try
                 {
+                    // Update route basic info
                     _context.Update(route);
+
+                    // Remove existing route stops
+                    var existingStops = _context.RouteStop.Where(rs => rs.RouteId == id);
+                    _context.RouteStop.RemoveRange(existingStops);
+
+                    // Add new route stops in order
+                    if (SelectedStops != null && SelectedStops.Any())
+                    {
+                        foreach (var item in SelectedStops.OrderBy(kv => kv.Key))
+                        {
+                            _context.RouteStop.Add(new RouteStop
+                            {
+                                RouteId = id,
+                                StopId = item.Value,
+                                stop_number = item.Key // Сохраняем порядковый номер
+                            });
+                        }
+                    }
+
                     await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Route updated successfully!";
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -145,10 +263,14 @@ namespace VehicleCompany.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
+
+            // If we got this far, something failed, redisplay form
+            ViewBag.AvailableStops = await _context.Stop.OrderBy(s => s.Name).ToListAsync();
             return View(route);
         }
+
+
 
         // GET: Routes/Delete/5
         public async Task<IActionResult> Delete(long? id)
@@ -167,6 +289,8 @@ namespace VehicleCompany.Controllers
 
             return View(route);
         }
+
+
 
         // POST: Routes/Delete/5
         [HttpPost, ActionName("Delete")]

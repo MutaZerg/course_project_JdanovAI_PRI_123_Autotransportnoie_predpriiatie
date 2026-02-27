@@ -1,15 +1,124 @@
 @model IEnumerable<VehicleCompany.Models.Route>
+@using VehicleCompany.Models
 
+@{
+    ViewData["Title"] = "Index";
+    var sortOrder = ViewBag.SortOrder as string ?? "";
+    var sortBy = ViewBag.SortBy as string ?? "";
+}
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form asp-action="Index" method="get" class="form-inline">
+            <div class="input-group">
+                <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control" placeholder="Search by stop name..." />
+                <button type="submit" class="btn btn-outline-secondary">Search</button>
+                <a asp-action="Index" class="btn btn-outline-danger">Clear</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortBy == "travel_time" && sortOrder == "asc" ? "desc" : "asc")"
+                   asp-route-sortBy="travel_time"
+                   asp-route-searchString="@ViewBag.CurrentFilter"
+                   class="text-white text-decoration-none">
+                    @Html.DisplayNameFor(model => model.Travel_time)
+                    @if (sortBy == "travel_time")
+                    {
+                        <i class="bi bi-arrow-@(sortOrder == "asc" ? "up" : "down")"></i>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortBy == "price" && sortOrder == "asc" ? "desc" : "asc")"
+                   asp-route-sortBy="price"
+                   asp-route-searchString="@ViewBag.CurrentFilter"
+                   class="text-white text-decoration-none">
+                    @Html.DisplayNameFor(model => model.Price)
+                    @if (sortBy == "price")
+                    {
+                        <i class="bi bi-arrow-@(sortOrder == "asc" ? "up" : "down")"></i>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortBy == "stops" && sortOrder == "asc" ? "desc" : "asc")"
+                   asp-route-sortBy="stops"
+                   asp-route-searchString="@ViewBag.CurrentFilter"
+                   class="text-white text-decoration-none">
+                    Stops
+                    @if (sortBy == "stops")
+                    {
+                        <i class="bi bi-arrow-@(sortOrder == "asc" ? "up" : "down")"></i>
+                    }
+                </a>
+            </th>
+            <th>Stop Names</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var stops = item.RouteStops?.Select(rs => rs.Stop).ToList() ?? new List<Stop>();
+            var stopCount = stops.Count;
+            var stopNames = string.Join(", ", stops.Select(s => s.Name));
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Travel_time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <span class="badge @(stopCount > 0 ? "bg-info" : "bg-secondary")">
+                        @stopCount @(stopCount == 1 ? "stop" : "stops")
+                    </span>
+                </td>
+                <td>
+                    @if (stopCount > 0)
+                    {
+                        <span class="text-truncate d-inline-block" style="max-width: 200px;"
+                              title="@stopNames">
+                            @stopNames
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">No stops</span>
+                    }
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                        <a asp-action="BookTrip" asp-route-id="@item.Id" class="btn btn-sm btn-success">Book</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@* <table class="table">
     <thead>
         <tr>
             <th>
@@ -39,4 +148,47 @@
         </tr>
 }
     </tbody>
-</table>
+</table> *@
+
+@if (ViewBag.TotalPages > 1)
+{
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(ViewBag.PageNumber <= 1 ? "disabled" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-pageNumber="@(ViewBag.PageNumber - 1)"
+                   asp-route-sortOrder="@ViewBag.SortOrder"
+                   asp-route-sortBy="@ViewBag.SortBy"
+                   asp-route-searchString="@ViewBag.CurrentFilter">
+                    Previous
+                </a>
+            </li>
+
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pageNumber="@i"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-searchString="@ViewBag.CurrentFilter">
+                        @i
+                    </a>
+                </li>
+            }
+
+            <li class="page-item @(ViewBag.PageNumber >= ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-pageNumber="@(ViewBag.PageNumber + 1)"
+                   asp-route-sortOrder="@ViewBag.SortOrder"
+                   asp-route-sortBy="@ViewBag.SortBy"
+                   asp-route-searchString="@ViewBag.CurrentFilter">
+                    Next
+                </a>
+            </li>
+        </ul>
+    </nav>
+}

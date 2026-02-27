@@ -21,11 +21,8 @@ namespace VehicleCompany.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
 
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; } = string.Empty;
-
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; } = string.Empty;
+        [Display(Name = "UserName")]
+        public string UserName { get; set; } = string.Empty;
     }
 
     public class ForgotPasswordViewModel
@@ -52,5 +49,12 @@ namespace VehicleCompany.Models
         public string ConfirmPassword { get; set; } = string.Empty;
 
         public string Code { get; set; } = string.Empty;
+    }
+    public class RegisterResult
+    {
+        public bool Success { get; set; }
+        public string? Message { get; set; }
+        public List<string> Errors { get; set; } = new List<string>();
+        public User? User { get; set; }
     }
 }

@@ -4,11 +4,44 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+@{
+    ViewData["Title"] = "Edit";
 
+    // Получаем данные из ViewBag
+    var availableStops = ViewBag.AvailableStops as List<Stop> ?? new List<Stop>();
+    var selectedStopIds = ViewBag.SelectedStopIds as List<long> ?? new List<long>();
+
+    // Получаем выбранные остановки из модели с учетом stop_number
+    var routeStops = new List<Stop>();
+    var stopNumbers = new Dictionary<long, int>();
+
+    if (Model.RouteStops != null && Model.RouteStops.Any())
+    {
+        var orderedStops = Model.RouteStops
+            .Where(rs => rs.Stop != null)
+            .OrderBy(rs => rs.stop_number)
+            .ToList();
+
+        routeStops = orderedStops.Select(rs => rs.Stop!).ToList();
+
+        foreach (var rs in orderedStops)
+        {
+            if (rs.Stop != null)
+            {
+                stopNumbers[rs.Stop.Id] = rs.stop_number;
+            }
+        }
+    }
+}
+<h1>Edit</h1>
+<div>
+    <div>Available stops count: @availableStops.Count</div>
+    <div>Selected stop IDs: @string.Join(", ", selectedStopIds)</div>
+    <div>Route stops count: @routeStops.Count</div>
+</div>
 <h4>Route</h4>
 <hr />
-<div class="row">
+@* <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -32,8 +65,474 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
+</div> *@
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post" id="routeForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Travel_time" class="control-label fw-bold"></label>
+                <input asp-for="Travel_time" class="form-control" type="time" step="1"
+                       value="@Model.Travel_time.ToString(@"hh\:mm\:ss")" />
+                <span asp-validation-for="Travel_time" class="text-danger"></span>
+                <small class="form-text text-muted">Format: HH:MM:SS</small>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="control-label fw-bold"></label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input asp-for="Price" class="form-control" type="number" min="0" step="1" />
+                </div>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <hr />
+
+            <h4>Route Stops</h4>
+            <p class="text-muted">Select stops in the order they appear on the route</p>
+
+            <!-- Selected Stops List -->
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-geo-alt-fill"></i> Selected Stops</span>
+                    <span class="badge bg-light text-dark" id="stopCount">@routeStops.Count stops</span>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group" id="selectedStopsList">
+                        @if (routeStops.Any())
+                        {
+                            for (int i = 0; i < routeStops.Count; i++)
+                            {
+                                var stop = routeStops[i];
+                                var stopNumber = stopNumbers.ContainsKey(stop.Id) ? stopNumbers[stop.Id] : i + 1;
+                                <li class="list-group-item d-flex justify-content-between align-items-center"
+                                    data-stop-id="@stop.Id" data-stop-number="@stopNumber">
+                                    <div>
+                                        <span class="badge bg-secondary me-2">@(i + 1)</span>
+                                        <i class="bi bi-geo-alt me-2"></i>
+                                        @stop.Name
+                                        <small class="text-muted ms-2">(Stop #@stopNumber)</small>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary move-stop me-1"
+                                                onclick="moveStop(this, 'up')" @(i == 0 ? "disabled" : "")>
+                                            <i class="bi bi-arrow-up"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-primary move-stop me-1"
+                                                onclick="moveStop(this, 'down')" @(i == routeStops.Count - 1 ? "disabled" : "")>
+                                            <i class="bi bi-arrow-down"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger remove-stop"
+                                                onclick="removeStop(this)">
+                                            <i class="bi bi-x"></i>
+                                        </button>
+                                    </div>
+                                    <!-- Используем порядковый номер как ключ для сохранения -->
+                                    <input type="hidden" name="SelectedStops[@i]" value="@stop.Id" class="stop-id-input" />
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="list-group-item text-center text-muted" id="noStopsMessage">
+                                <i class="bi bi-geo-alt"></i> No stops selected. Add stops from the list below.
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Available Stops -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <i class="bi bi-plus-circle"></i> Available Stops
+                </div>
+                <div class="card-body">
+                    @if (availableStops.Any())
+                    {
+                        <div class="input-group mb-3">
+                            <input type="text" id="stopSearch" class="form-control" placeholder="Search stops..." />
+                            <button class="btn btn-outline-secondary" type="button" onclick="clearSearch()">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+
+                        <div class="row" id="availableStopsContainer">
+                            @foreach (var stop in availableStops)
+                            {
+                                var isSelected = routeStops.Any(s => s.Id == stop.Id) || selectedStopIds.Contains(stop.Id);
+                                <div class="col-md-6 mb-2 stop-item"
+                                     data-stop-name="@stop.Name.ToLower()"
+                                     data-stop-id="@stop.Id">
+                                    <div class="card @(isSelected ? "border-success bg-light" : "")">
+                                        <div class="card-body p-2 d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <i class="bi bi-geo-alt me-2"></i>
+                                                @stop.Name
+                                                @if (isSelected)
+                                                {
+                                                    <span class="badge bg-success ms-2">Added</span>
+                                                }
+                                            </div>
+                                            @if (!isSelected)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-success add-stop"
+                                                        onclick="addStop(@stop.Id, '@stop.Name')">
+                                                    <i class="bi bi-plus"></i> Add
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-danger remove-stop-btn"
+                                                        onclick="removeStopById(@stop.Id, '@stop.Name')">
+                                                    <i class="bi bi-dash"></i> Remove
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div id="noSearchResults" class="text-center text-muted py-3" style="display: none;">
+                            <i class="bi bi-search"></i> No stops found matching your search.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning mb-0">
+                            <i class="bi bi-exclamation-triangle"></i> No stops available.
+                            <a asp-controller="Stops" asp-action="Create">Create stops first</a>.
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Save Changes
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </form>
+    </div>
+    </div>
+
+    <!-- Preview Column -->
+<div class="col-md-6">
+    <div class="card sticky-top" style="top: 20px;">
+        <div class="card-header bg-info text-white">
+            <i class="bi bi-eye"></i> Route Preview
+        </div>
+        <div class="card-body">
+            <h5>Route Details:</h5>
+            <table class="table table-sm">
+                <tr>
+                    <th>Travel Time:</th>
+                    <td id="previewTravelTime">@Model.Travel_time.ToString(@"hh\:mm\:ss")</td>
+                </tr>
+                <tr>
+                    <th>Price:</th>
+                    <td id="previewPrice">$@Model.Price</td>
+                </tr>
+                <tr>
+                    <th>Total Stops:</th>
+                    <td id="previewStopCount">@routeStops.Count</td>
+                </tr>
+            </table>
+
+            <h6>Stop Sequence:</h6>
+            <ol class="list-group list-group-numbered" id="previewStopsList">
+                @if (routeStops.Any())
+                {
+                    for (int i = 0; i < routeStops.Count; i++)
+                    {
+                        var stop = routeStops[i];
+                        var stopNumber = stopNumbers.ContainsKey(stop.Id) ? stopNumbers[stop.Id] : i + 1;
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @stop.Name
+                            <span class="badge bg-info">Stop #@stopNumber</span>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item text-muted text-center">No stops in route</li>
+                }
+            </ol>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        let debounceTimer;
+
+        $(document).ready(function() {
+            // Live preview updates
+            $('#Travel_time').on('input', function() {
+                $('#previewTravelTime').text($(this).val() || '00:00:00');
+            });
+
+            $('#Price').on('input', function() {
+                $('#previewPrice').text('$' + ($(this).val() || '0'));
+            });
+
+            // Search functionality
+            $('#stopSearch').on('keyup', function() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(filterStops, 300);
+            });
+
+            // Update move buttons initially
+            updateMoveButtons();
+        });
+
+        function filterStops() {
+            const searchTerm = $('#stopSearch').val().toLowerCase().trim();
+            const stopItems = $('.stop-item');
+            let visibleCount = 0;
+
+            stopItems.each(function() {
+                const stopName = $(this).data('stop-name');
+                if (stopName.includes(searchTerm) || searchTerm === '') {
+                    $(this).show();
+                    visibleCount++;
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            if (visibleCount === 0) {
+                $('#noSearchResults').show();
+            } else {
+                $('#noSearchResults').hide();
+            }
+        }
+
+        function clearSearch() {
+            $('#stopSearch').val('');
+            filterStops();
+        }
+
+        function addStop(stopId, stopName) {
+            const selectedList = $('#selectedStopsList');
+
+            // Remove "no stops" message if it exists
+            $('#noStopsMessage').remove();
+
+            // Check if stop is already added
+            if ($(`#selectedStopsList [data-stop-id="${stopId}"]`).length > 0) {
+                alert('This stop is already added to the route!');
+                return;
+            }
+
+            const stopCount = selectedList.children().length;
+            const nextStopNumber = stopCount + 1;
+
+            // Create new list item
+            const newStop = `
+                <li class="list-group-item d-flex justify-content-between align-items-center"
+                    data-stop-id="${stopId}" data-stop-number="${nextStopNumber}">
+                    <div>
+                        <span class="badge bg-secondary me-2">${stopCount + 1}</span>
+                        <i class="bi bi-geo-alt me-2"></i>
+                        ${stopName}
+                        <small class="text-muted ms-2">(Stop #${nextStopNumber})</small>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-outline-primary move-stop me-1"
+                                onclick="moveStop(this, 'up')" ${stopCount === 0 ? 'disabled' : ''}>
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-primary move-stop me-1"
+                                onclick="moveStop(this, 'down')">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger remove-stop"
+                                onclick="removeStop(this)">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </div>
+                    <input type="hidden" name="SelectedStops[${stopCount}]" value="${stopId}" class="stop-id-input" />
+                </li>
+            `;
+
+            // Add to list
+            selectedList.append(newStop);
+
+            // Update the button in available stops
+            const stopCard = $(`.stop-item[data-stop-id="${stopId}"]`);
+            stopCard.find('.card-body').html(`
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="bi bi-geo-alt me-2"></i>
+                        ${stopName}
+                        <span class="badge bg-success ms-2">Added</span>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeStopById(${stopId}, '${stopName}')">
+                        <i class="bi bi-dash"></i> Remove
+                    </button>
+                </div>
+            `);
+            stopCard.find('.card').addClass('border-success bg-light');
+
+            updateStopNumbers();
+            updatePreview();
+            updateMoveButtons();
+        }
+
+        function removeStop(button) {
+            const listItem = $(button).closest('li');
+            const stopId = listItem.data('stop-id');
+            const stopName = listItem.find('div:first').text().trim().replace(/^\d+\s*/, '').replace(/\(Stop #\d+\)$/, '').trim();
+
+            listItem.remove();
+
+            // Update the button in available stops
+            const stopCard = $(`.stop-item[data-stop-id="${stopId}"]`);
+            stopCard.find('.card-body').html(`
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="bi bi-geo-alt me-2"></i>
+                        ${stopName}
+                    </div>
+                    <button type="button" class="btn btn-sm btn-success" onclick="addStop(${stopId}, '${stopName}')">
+                        <i class="bi bi-plus"></i> Add
+                    </button>
+                </div>
+            `);
+            stopCard.find('.card').removeClass('border-success bg-light');
+
+            if ($('#selectedStopsList').children().length === 0) {
+                $('#selectedStopsList').html(`
+                    <li class="list-group-item text-center text-muted" id="noStopsMessage">
+                        <i class="bi bi-geo-alt"></i> No stops selected. Add stops from the list below.
+                    </li>
+                `);
+            }
+
+            updateStopNumbers();
+            updatePreview();
+            updateMoveButtons();
+        }
+
+        function removeStopById(stopId, stopName) {
+            const listItem = $(`#selectedStopsList [data-stop-id="${stopId}"]`);
+            if (listItem.length > 0) {
+                const removeButton = listItem.find('.remove-stop');
+                removeStop(removeButton[0]);
+            }
+        }
+
+        function moveStop(button, direction) {
+            const listItem = $(button).closest('li');
+
+            if (direction === 'up') {
+                const prevItem = listItem.prev();
+                if (prevItem.length > 0) {
+                    listItem.insertBefore(prevItem);
+                }
+            } else {
+                const nextItem = listItem.next();
+                if (nextItem.length > 0) {
+                    listItem.insertAfter(nextItem);
+                }
+            }
+
+            updateStopNumbers();
+            updateMoveButtons();
+            updatePreview();
+        }
+
+        function updateStopNumbers() {
+            $('#selectedStopsList li').each(function(index) {
+                // Update display number
+                $(this).find('.badge.bg-secondary').text(index + 1);
+
+                // Update stop number in text
+                const stopNameDiv = $(this).find('div:first');
+                let text = stopNameDiv.text().trim();
+                // Remove existing stop number if present
+                text = text.replace(/\s*\(Stop #\d+\)$/, '');
+                // Add new stop number
+                const stopId = $(this).data('stop-id');
+                const stopNumber = index + 1;
+                $(this).data('stop-number', stopNumber);
+
+                const namePart = text.replace(/^\d+\s*/, '');
+                stopNameDiv.html(`
+                    <span class="badge bg-secondary me-2">${index + 1}</span>
+                    <i class="bi bi-geo-alt me-2"></i>
+                    ${namePart}
+                    <small class="text-muted ms-2">(Stop #${stopNumber})</small>
+                `);
+
+                // Update hidden input name to maintain order
+                $(this).find('.stop-id-input').attr('name', `SelectedStops[${index}]`);
+            });
+
+            $('#stopCount').text($('#selectedStopsList li').length + ' stops');
+        }
+
+        function updateMoveButtons() {
+            const items = $('#selectedStopsList li');
+
+            items.each(function(index) {
+                const upButton = $(this).find('.move-stop[onclick*="up"]');
+                const downButton = $(this).find('.move-stop[onclick*="down"]');
+
+                upButton.prop('disabled', index === 0);
+                downButton.prop('disabled', index === items.length - 1);
+            });
+        }
+
+        function updatePreview() {
+            const stopCount = $('#selectedStopsList li').length;
+            $('#previewStopCount').text(stopCount);
+
+            const previewList = $('#previewStopsList');
+            previewList.empty();
+
+            if (stopCount > 0) {
+                $('#selectedStopsList li').each(function(index) {
+                    const stopName = $(this).find('div:first').text().trim()
+                        .replace(/^\d+\s*/, '')
+                        .replace(/\s*\(Stop #\d+\)$/, '');
+                    const stopNumber = index + 1;
+                    previewList.append(`
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            ${stopName}
+                            <span class="badge bg-info">Stop #${stopNumber}</span>
+                        </li>
+                    `);
+                });
+            } else {
+                previewList.html('<li class="list-group-item text-muted text-center">No stops in route</li>');
+            }
+        }
+
+        // Form submission
+        $('#routeForm').on('submit', function(e) {
+            // Update all hidden inputs to ensure they're submitted in the correct order
+            $('#selectedStopsList li').each(function(index) {
+                const input = $(this).find('.stop-id-input');
+                input.attr('name', `SelectedStops[${index}]`);
+            });
+
+            return true;
+        });
+    </script>
 }

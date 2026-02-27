@@ -1,13 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using VehicleCompany.Contexts;
+using VehicleCompany.Models;
 using VehicleCompany.Services;
 
 namespace VehicleCompany.Attributes
 {
+
     public class PermissionAttribute : Attribute, IAuthorizationFilter
     {
         private readonly string _permission;
-
+        
         public PermissionAttribute(string permission)
         {
             _permission = permission;

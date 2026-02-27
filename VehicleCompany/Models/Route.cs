@@ -12,5 +12,6 @@ namespace VehicleCompany.Models
         public required long Price { get; set; }
 
         public ICollection<RouteStop> RouteStops { get; set; } = new List<RouteStop>();
+
     }
 }

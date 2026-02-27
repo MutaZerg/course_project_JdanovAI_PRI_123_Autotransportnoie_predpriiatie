@@ -16,5 +16,7 @@ namespace VehicleCompany.Models
 
         [ForeignKey("StopId")]
         public virtual Stop? Stop { get; set; }
+
+        public int stop_number { get; set; }
     }
 }
