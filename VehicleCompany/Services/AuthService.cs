@@ -160,12 +160,11 @@ namespace VehicleCompany.Services
                     return result;
                 }
 
-                // Создание нового пользователя
                 var user = new User
                 {
                     UserName = model.UserName,
                     Email = model.Email, // Заглушка
-                    Password = model.Password
+                    Password = BCrypt.Net.BCrypt.HashPassword(model.Password)
                 };
                 _logger.LogInformation("Пользователь cjplf", "as");
 

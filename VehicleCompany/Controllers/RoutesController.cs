@@ -1,18 +1,19 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using VehicleCompany.Attributes;
 using VehicleCompany.Contexts;
 using VehicleCompany.Models;
 using Route = VehicleCompany.Models.Route;
-using Microsoft.AspNetCore.Authorization;
 
 namespace VehicleCompany.Controllers
 {
-    [Authorize]
+
     public class RoutesController : Controller
     {
         private readonly UserContext _context;
@@ -94,6 +95,7 @@ namespace VehicleCompany.Controllers
 
         /// <summary>Book a trip: shows all trips on this route and available seats per trip.</summary>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> BookTrip(long? id)
         {
             if (id == null) return NotFound();
@@ -122,6 +124,8 @@ namespace VehicleCompany.Controllers
         }
 
         // GET: Routes/Create
+        [Authorize]
+        [Permission("create_route")]
         public IActionResult Create()
         {
             return View();
@@ -132,6 +136,9 @@ namespace VehicleCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
+        [Permission("create_route")]
+
         public async Task<IActionResult> Create([Bind("Id,Travel_time,Price")] Route route)
         {
             if (ModelState.IsValid)
@@ -144,6 +151,8 @@ namespace VehicleCompany.Controllers
         }
 
         // GET: Routes/Edit/5
+        [Authorize]
+        [Permission("edit_route")]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -178,44 +187,10 @@ namespace VehicleCompany.Controllers
             return View(route);
         }
 
-        // POST: Routes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(long id, [Bind("Id,Travel_time,Price")] Route route)
-        //{
-        //    if (id != route.Id)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(route);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!RouteExists(route.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(route);
-        //}
-
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
+        [Permission("edit_route")]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Travel_time,Price")] Route route, Dictionary<int, long> SelectedStops)
         {
             if (id != route.Id)
@@ -273,6 +248,8 @@ namespace VehicleCompany.Controllers
 
 
         // GET: Routes/Delete/5
+        [Authorize]
+        [Permission("delete_route")]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -295,6 +272,8 @@ namespace VehicleCompany.Controllers
         // POST: Routes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
+        [Permission("delete_route")]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var route = await _context.Route.FindAsync(id);
@@ -310,6 +289,37 @@ namespace VehicleCompany.Controllers
         private bool RouteExists(long id)
         {
             return _context.Route.Any(e => e.Id == id);
+        }
+
+        public IActionResult SearchRoutes(String first_stop, String second_stop)
+        {
+            var search_results = new List<Route>();
+            if (first_stop != null && second_stop != null)
+            {
+                var query = @"
+                SELECT 
+                r.id as RouteId,
+                r.travel_time as Travel_time,
+                r.price as Price
+                FROM Route r
+                INNER JOIN Route_stop rs ON rs.route_id = r.id
+                INNER JOIN Stop s ON s.id = rs.stop_id AND s.name = "
+                + @first_stop + 
+                "INNER JOIN Route_stop rs2 ON rs2.route_id = r.id INNER JOIN Stop s2 ON s2.id = rs2.stop_id AND s2.name ="
+                + @second_stop +
+                "WHERE rs.stop_number < rs2.stop_number";
+
+                search_results = _context.Database
+                    .SqlQueryRaw<Route>(query)
+                    .ToList();
+            }
+            else
+            {
+                search_results = _context.Database
+                    .SqlQueryRaw<Route>(@"Select * from Route")
+                    .ToList();
+            }
+            return View(search_results);
         }
     }
 }

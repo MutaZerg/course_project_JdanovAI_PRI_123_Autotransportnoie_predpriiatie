@@ -13,18 +13,17 @@
                     <p class="mb-0 mt-2 text-white-50">Создайте новый аккаунт</p>
                 </div>
                 <div class="card-body p-4">
-                    @if (TempData["SuccessMessage"] != null)
+                    @* @if (TempData["SuccessMessage"] != null)
                     {
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             @TempData["SuccessMessage"]
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    }
+                    } *@
 
                     <form asp-action="Register" method="post" id="registerForm">
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert" style="display: none;"></div>
 
-                        <!-- Имя пользователя -->
                         <div class="form-floating mb-3">
                             <input asp-for="UserName" class="form-control" placeholder="ivan123" 
                                    autocomplete="username" aria-required="true" />
@@ -38,7 +37,6 @@
                             </small>
                         </div>
 
-                        <!-- Email (заглушка) -->
                         <div class="form-floating mb-3">
                             <input asp-for="Email" class="form-control" placeholder="name@example.com" 
                                    autocomplete="email" aria-required="true" />
@@ -49,7 +47,6 @@
                             <div class="invalid-feedback" id="emailFeedback"></div>
                         </div>
 
-                        <!-- Пароль -->
                         <div class="form-floating mb-3">
                             <input asp-for="Password" class="form-control" placeholder="Пароль" 
                                    autocomplete="new-password" aria-required="true" />
@@ -67,7 +64,6 @@
                             </div>
                         </div>
 
-                        <!-- Подтверждение пароля -->
                         <div class="form-floating mb-3">
                             <input asp-for="ConfirmPassword" class="form-control" placeholder="Подтверждение пароля" 
                                    autocomplete="new-password" aria-required="true" />
@@ -78,8 +74,6 @@
                             <div class="password-match-indicator mt-1" id="passwordMatch"></div>
                         </div>
 
-
-                        <!-- Кнопка регистрации -->
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary btn-lg" id="registerButton">
                                 <i class="bi bi-person-plus"></i> Зарегистрироваться
@@ -87,12 +81,10 @@
                         </div>
                     </form>
 
-                    <!-- Разделитель -->
                     <div class="text-center my-3">
                         <span class="text-muted">или</span>
                     </div>
 
-                    <!-- Ссылка на вход -->
                     <div class="text-center">
                         <p class="mb-0">
                             Уже есть аккаунт? <a asp-action="Login" class="text-primary fw-bold">Войдите</a>

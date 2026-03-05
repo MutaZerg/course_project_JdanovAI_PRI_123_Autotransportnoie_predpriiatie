@@ -1,6 +1,11 @@
 @model IEnumerable<VehicleCompany.Models.Route>
 @using VehicleCompany.Models
-
+@{
+    var userPermissions = User.Claims
+        .Where(c => c.Type == "Permission")
+        .Select(c => c.Value)
+        .ToList();
+}
 @{
     ViewData["Title"] = "Index";
     var sortOrder = ViewBag.SortOrder as string ?? "";
@@ -93,25 +98,19 @@
                         @stopCount @(stopCount == 1 ? "stop" : "stops")
                     </span>
                 </td>
-                <td>
-                    @if (stopCount > 0)
-                    {
-                        <span class="text-truncate d-inline-block" style="max-width: 200px;"
-                              title="@stopNames">
-                            @stopNames
-                        </span>
-                    }
-                    else
-                    {
-                        <span class="text-muted">No stops</span>
-                    }
-                </td>
+                
                 <td>
                     <div class="btn-group" role="group">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        @if (userPermissions.Contains("edit_route"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        }
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
                         <a asp-action="BookTrip" asp-route-id="@item.Id" class="btn btn-sm btn-success">Book</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                        @if (userPermissions.Contains("delete_route"))
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                        }
                     </div>
                 </td>
             </tr>

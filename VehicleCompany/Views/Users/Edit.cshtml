@@ -1,5 +1,5 @@
-@model VehicleCompany.Models.User
-
+@model VehicleCompany.Models.EditUserRolesViewModel
+@* @model VehicleCompany.Models.RoleSelectionViewModel *@
 @{
     ViewData["Title"] = "Edit";
 }
@@ -19,22 +19,49 @@
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                @* <label asp-for="Password" class="control-label"></label> *@
+                <input type="hidden" asp-for="Password" class="form-control" />
+                @* <span asp-validation-for="Password" class="text-danger"></span> *@
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+
+    <table class="table">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Assigned</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Roles.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Model.Roles[i].RoleName
+                                <input type="hidden" asp-for="Roles[i].RoleId" />
+                                <input type="hidden" asp-for="Roles[i].RoleName" />
+                            </td>
+                            <td>
+                                <input type="radio"
+                                       name="SelectedRoleId"
+                                       value="@Model.Roles[i].RoleId"
+                                       @(Model.Roles[i].IsSelected ? "checked" : "") />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+    </table>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back to users</a>
+</form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

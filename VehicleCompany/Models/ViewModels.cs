@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VehicleCompany.Models
 {
@@ -39,5 +40,35 @@ namespace VehicleCompany.Models
     {
         public Trip Trip { get; set; } = null!;
         public List<Seat> AvailableSeats { get; set; } = new List<Seat>();
+    }
+
+    public class RoleSelectionViewModel
+    {
+        public long RoleId { get; set; }
+        public string RoleName { get; set; } = string.Empty;
+        public bool IsSelected { get; set; }
+    }
+
+    public class EditUserRolesViewModel
+    {
+        [Key]
+        public long Id { get; set; }
+
+        [Column("User_name")]
+        [Required]
+        [StringLength(100)]
+        public string UserName { get; set; } = string.Empty;
+
+        [Column("Password")]
+        [Required]
+        public string Password { get; set; } = string.Empty;
+
+        [Column("Email")]
+        [EmailAddress]
+        [Required]
+        public string Email { get; set; } = string.Empty; //заглушка
+        public long SelectedRoleId { get; set; }
+
+        public List<RoleSelectionViewModel> Roles { get; set; } = new List<RoleSelectionViewModel>();
     }
 }

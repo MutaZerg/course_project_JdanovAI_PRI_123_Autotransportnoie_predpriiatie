@@ -1,6 +1,8 @@
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,14 +25,14 @@ namespace VehicleCompany.Controllers
         }
 
         // GET: Users
-        //[Permission("users.view")]
+        [Permission("edit_user")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users.ToListAsync());
         }
 
         // GET: Users/Details/5
-        [Permission("users.details")]
+        [Permission("edit_user")]
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -67,51 +69,106 @@ namespace VehicleCompany.Controllers
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
+
+                var user_role = new UserRole();
+                user_role.UserId = user.Id;
+
+                //Нада чёнить по умнее придумать
+                user_role.RoleId = 2;
+
+                _context.Add(user_role);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
         }
 
-        // GET: Users/Edit/5
-        [Permission("users.edit_user")]
+        [Permission("edit_user")]
+        [HttpGet]
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users
+            .Include(u => u.UserRoles)
+            .FirstOrDefaultAsync(u => u.Id == id);
+
             if (user == null)
             {
                 return NotFound();
             }
-            return View(user);
+
+            var allRoles = await _context.Roles.ToListAsync();
+            var userRoleIds = user.UserRoles.Select(ur => ur.RoleId).ToHashSet();
+
+            var vm = new EditUserRolesViewModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Password = user.Password,
+                Roles = allRoles
+                    .Select(r => new RoleSelectionViewModel
+                    {
+                        RoleId = r.Id,
+                        RoleName = r.RoleName,
+                        IsSelected = userRoleIds.Contains(r.Id)
+                    })
+                    .ToList()
+            };
+
+            return View(vm);
         }
 
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Permission("edit_user")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Permission("users.edit_user")]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,UserName,Password,Email")] User user)
+        public async Task<IActionResult> Edit(EditUserRolesViewModel model)
         {
-            if (id != user.Id)
-            {
-                return NotFound();
-            }
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(user);
+                    var user_part1 = new User();
+
+                    user_part1.UserName = model.UserName;
+                    user_part1.Password = model.Password;
+                    user_part1.Email = model.Email;
+                    user_part1.Id = model.Id;
+
+                    _context.Update(user_part1);
+                    await _context.SaveChangesAsync();
+
+
+                    var user = await _context.Users
+                    .Include(u => u.UserRoles)
+                    .FirstOrDefaultAsync(u => u.Id == model.Id);
+
+                    if (user == null)
+                    {
+                        return NotFound();
+                    }
+
+
+                    _context.UserRoles.RemoveRange(user.UserRoles);
+
+                    var selectedRoleIds = model.Roles
+                        .Where(r => r.IsSelected)
+                        .Select(r => r.RoleId)
+                        .ToList();
+
+                    _context.UserRoles.Add(new UserRole
+                    {
+                        UserId = user.Id,
+                        RoleId = model.SelectedRoleId
+                    });
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!UserExists(model.Id))
                     {
                         return NotFound();
                     }
@@ -119,14 +176,18 @@ namespace VehicleCompany.Controllers
                     {
                         throw;
                     }
+
+
+
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(user);
+
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Users/Delete/5
-        [Permission("users.delete")]
+        [Permission("delete_user")]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -147,7 +208,7 @@ namespace VehicleCompany.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Permission("users.delete")]
+        [Permission("delete_user")]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var user = await _context.Users.FindAsync(id);

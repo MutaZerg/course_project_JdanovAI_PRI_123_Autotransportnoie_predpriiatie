@@ -182,20 +182,30 @@ namespace VehicleCompany.Controllers
         {
             return View("~/Views/Accounts/AccessDenied.cshtml");
         }
+
         private async Task SignInUserAsync(User user)
         {
-            var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.UserName),
-        new Claim(ClaimTypes.Email, user.Email)
-    };
+            // Load roles and permissions for this user
+            var userSession = await _authService.GetUserSessionAsync(user.Id);
 
-            // Добавляем роль по умолчанию
-            var userRoles = await _authService.GetUserRolesAsync(user.Id);
-            foreach (var role in userRoles)
+            var claims = new List<Claim>
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email)
+            };
+
+            if (userSession != null)
+            {
+                foreach (var role in userSession.Roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+
+                foreach (var permission in userSession.Permissions)
+                {
+                    claims.Add(new Claim("Permission", permission));
+                }
             }
 
             var claimsIdentity = new ClaimsIdentity(

@@ -5,19 +5,19 @@
 
 <div class="card">
     <div class="card-header">
-        <h4>Profile</h4>
+        <h4>Профиль</h4>
     </div>
     <div class="card-body">
         <dl class="row">
-            <dt class="col-sm-3">User name</dt>
+            <dt class="col-sm-3">Имя</dt>
             <dd class="col-sm-9">@Model.UserName</dd>
             <dt class="col-sm-3">Email</dt>
             <dd class="col-sm-9">@Model.Email</dd>
-            <dt class="col-sm-3">Roles</dt>
+            <dt class="col-sm-3">Роль</dt>
             <dd class="col-sm-9">@(Model.Roles?.Count > 0 ? string.Join(", ", Model.Roles) : "—")</dd>
-            <dt class="col-sm-3">Permissions</dt>
+            <dt class="col-sm-3">Доступ</dt>
             <dd class="col-sm-9">@(Model.Permissions?.Count > 0 ? string.Join(", ", Model.Permissions) : "—")</dd>
         </dl>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">На главную</a>
     </div>
 </div>
