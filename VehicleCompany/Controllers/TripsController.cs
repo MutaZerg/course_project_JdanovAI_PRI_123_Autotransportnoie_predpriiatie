@@ -49,29 +49,187 @@ namespace VehicleCompany.Controllers
 
             return View(trip);
         }
+
+        [HttpGet]
         [Permission("create_trip")]
-        // GET: Trips/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(long? routeId)
         {
-            return View();
+            // Create view model
+            var viewModel = new TripCreateViewModel();
+
+            // If routeId is provided, pre-select it
+            if (routeId.HasValue)
+            {
+                var route = await _context.Route
+                    .Include(r => r.RouteStops)
+                    .ThenInclude(rs => rs.Stop)
+                    .FirstOrDefaultAsync(r => r.Id == routeId);
+
+                if (route != null)
+                {
+                    viewModel.RouteId = route.Id;
+                    viewModel.RouteInfo = $"{route.Travel_time} мин, {route.Price} ₽";
+
+                    // Get stop names for display
+                    var stops = route.RouteStops?
+                        .OrderBy(rs => rs.stop_number)
+                        .Select(rs => rs.Stop?.Name)
+                        .Where(name => !string.IsNullOrEmpty(name))
+                        .ToList();
+
+                    if (stops != null && stops.Any())
+                    {
+                        viewModel.RouteStops = string.Join(" → ", stops);
+                    }
+                }
+            }
+
+            // Get ALL vehicles with their seat information
+            var allVehicles = await _context.Vehicle
+                .Include(v => v.Seats)
+                .Select(v => new
+                {
+                    Vehicle = v,
+                    TotalSeats = v.Seats.Count,
+                    AvailableSeatsCount = v.Seats.Count(s => !s.IsBooked)
+                })
+                .ToListAsync();
+
+            // Get IDs of vehicles that are ALREADY assigned to ANY trip
+            var assignedVehicleIds = await _context.Trip
+                .Select(t => t.Assigned_vehicle)
+                .Distinct()
+                .ToListAsync();
+
+            // Create view models for ALL vehicles, marking which ones are assigned
+            viewModel.AvailableVehicles = allVehicles.Select(v => new AvailableVehicleViewModel
+            {
+                VehicleId = v.Vehicle.Id,
+                VehicleInfo = v.Vehicle.Vehicle_info,
+                TotalSeats = v.TotalSeats,
+                AvailableSeats = v.AvailableSeatsCount,
+                IsAssigned = assignedVehicleIds.Contains(v.Vehicle.Id)
+            }).ToList();
+
+            // Add routes to ViewBag for dropdown
+            ViewBag.Routes = new SelectList(
+                await _context.Route
+                    .Include(r => r.RouteStops)
+                    .ThenInclude(rs => rs.Stop)
+                    .Select(r => new {
+                        r.Id,
+                        DisplayName = $"{r.Travel_time} мин, {r.Price} ₽ - {string.Join(" → ", r.RouteStops.OrderBy(rs => rs.stop_number).Select(rs => rs.Stop.Name))}"
+                    })
+                    .ToListAsync(),
+                "Id", "DisplayName", viewModel.RouteId);
+
+            return View(viewModel);
         }
 
         // POST: Trips/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Permission("create_trip")]
-        public async Task<IActionResult> Create([Bind("Id,Route_id,Start_time,End_time,Assigned_vehicle")] Trip trip)
+        public async Task<IActionResult> Create(TripCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                // Validate that end time is after start time
+                if (viewModel.EndTime <= viewModel.StartTime)
+                {
+                    ModelState.AddModelError("EndTime", "Время окончания должно быть позже времени начала");
+
+                    // Reload data
+                    await LoadVehicleData(viewModel);
+                    return View(viewModel);
+                }
+
+                // Check if the selected vehicle is already assigned to ANY trip
+                if (viewModel.AssignedVehicleId != null)
+                {
+                    var isVehicleAlreadyAssigned = await _context.Trip
+                        .AnyAsync(t => t.Assigned_vehicle == viewModel.AssignedVehicleId
+                            && t.Id != viewModel.Id); // Exclude current trip if editing
+
+                    if (isVehicleAlreadyAssigned)
+                    {
+                        ModelState.AddModelError("AssignedVehicleId", "Это транспортное средство уже назначено на другую поездку");
+
+                        // Reload data
+                        await LoadVehicleData(viewModel);
+                        return View(viewModel);
+                    }
+                }
+
+                // Create new trip
+                var trip = new Trip
+                {
+                    Route_id = viewModel.RouteId,
+                    Start_time = viewModel.StartTime,
+                    End_time = viewModel.EndTime,
+                    Assigned_vehicle = viewModel.AssignedVehicleId
+                };
+
                 _context.Add(trip);
                 await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Рейс успешно создан";
                 return RedirectToAction(nameof(Index));
             }
-            return View(trip);
+
+            // If we got this far, something failed, redisplay form
+            await LoadVehicleData(viewModel);
+            return View(viewModel);
         }
+
+        // Helper method to load vehicle data
+        private async Task LoadVehicleData(TripCreateViewModel viewModel)
+        {
+            // Get ALL vehicles with their seat information
+            var allVehicles = await _context.Vehicle
+                .Include(v => v.Seats)
+                .Select(v => new
+                {
+                    Vehicle = v,
+                    TotalSeats = v.Seats.Count,
+                    AvailableSeatsCount = v.Seats.Count(s => !s.IsBooked)
+                })
+                .ToListAsync();
+
+            // Get IDs of vehicles that are ALREADY assigned to ANY trip
+            var assignedVehicleIds = await _context.Trip
+                .Select(t => t.Assigned_vehicle)
+                .Distinct()
+                .ToListAsync();
+
+            // Create view models for ALL vehicles, marking which ones are assigned
+            viewModel.AvailableVehicles = allVehicles.Select(v => new AvailableVehicleViewModel
+            {
+                VehicleId = v.Vehicle.Id,
+                VehicleInfo = v.Vehicle.Vehicle_info,
+                TotalSeats = v.TotalSeats,
+                AvailableSeats = v.AvailableSeatsCount,
+                IsAssigned = assignedVehicleIds.Contains(v.Vehicle.Id)
+            }).ToList();
+
+            // Refresh routes dropdown
+            ViewBag.Routes = new SelectList(
+                await _context.Route
+                    .Include(r => r.RouteStops)
+                    .ThenInclude(rs => rs.Stop)
+                    .Select(r => new {
+                        r.Id,
+                        DisplayName = $"{r.Travel_time} мин, {r.Price} ₽ - {string.Join(" → ", r.RouteStops.OrderBy(rs => rs.stop_number).Select(rs => rs.Stop.Name))}"
+                    })
+                    .ToListAsync(),
+                "Id", "DisplayName", viewModel.RouteId);
+        }
+
+
+
+
+
+
 
         // GET: Trips/Edit/5
         public async Task<IActionResult> Edit(long? id)
@@ -165,6 +323,23 @@ namespace VehicleCompany.Controllers
             return _context.Trip.Any(e => e.Id == id);
         }
 
+        public async Task<IActionResult> FinishConfirmed(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var trip = await _context.Trip
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+            if (trip == null)
+            {
+                return NotFound();
+            }
+
+            return View(trip);
+        }
 
         // POST: Trips/Finish/5
         [HttpPost]
@@ -177,48 +352,22 @@ namespace VehicleCompany.Controllers
                 // Parameters for stored procedure
                 var tripIdParam = new MySqlParameter("@p_trip_id", id);
 
-                var messageParam = new MySqlParameter("@p_message", MySqlDbType.VarChar, 255)
-                {
-                    Direction = ParameterDirection.Output
-                };
+                //// Execute stored procedure
+                //await _context.Database.ExecuteSqlRawAsync(
+                //    "CALL sp_FinishTrip(@p_trip_id, @p_message, @p_bookings_deleted, @p_seats_updated)",
+                //    tripIdParam, messageParam, bookingsDeletedParam, seatsUpdatedParam);
 
-                var bookingsDeletedParam = new MySqlParameter("@p_bookings_deleted", MySqlDbType.Int32)
-                {
-                    Direction = ParameterDirection.Output
-                };
-
-                var seatsUpdatedParam = new MySqlParameter("@p_seats_updated", MySqlDbType.Int32)
-                {
-                    Direction = ParameterDirection.Output
-                };
-
-                // Execute stored procedure
                 await _context.Database.ExecuteSqlRawAsync(
-                    "CALL sp_FinishTrip(@p_trip_id, @p_seats_updated, @p_bookings_deleted, @p_message)",
-                    tripIdParam, seatsUpdatedParam, bookingsDeletedParam, messageParam);
+    "CALL sp_FinishTrip(@p_trip_id)",
+    tripIdParam);
 
                 // Get output values
-                string message = messageParam.Value?.ToString() ?? "Trip finished";
-                int bookingsDeleted = Convert.ToInt32(bookingsDeletedParam.Value);
-                int seatsUpdated = Convert.ToInt32(seatsUpdatedParam.Value);
-
-                if (message == "Trip finished successfully. ")
-                {
-                    TempData["SuccessMessage"] = message;
-                    TempData["BookingsDeleted"] = bookingsDeleted;
-                    TempData["SeatsCleared"] = seatsUpdated;
-                    return View(await _context.Trip.ToListAsync());
-                }
-                else
-                {
-                    ModelState.AddModelError("", message);
-                    return View(await _context.Trip.ToListAsync());
-                }
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"Error finishing trip: {ex.Message}");
-                return View(await _context.Trip.ToListAsync());
+                return RedirectToAction(nameof(Index)); 
             }
         }
     }

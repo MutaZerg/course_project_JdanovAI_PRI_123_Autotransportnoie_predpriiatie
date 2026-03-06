@@ -1,48 +1,181 @@
-﻿@model VehicleCompany.Models.Trip
+﻿@model VehicleCompany.Models.TripCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Trip</h4>
-<hr />
+<h4>Создание поездки</h4>
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-7">
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Route_id" class="control-label"></label>
-                <input asp-for="Route_id" class="form-control" />
-                <span asp-validation-for="Route_id" class="text-danger"></span>
+
+            <input type="hidden" asp-for="RouteId" />
+
+            @if (!string.IsNullOrEmpty(Model.RouteInfo))
+            {
+                <div class="alert alert-info">
+                    <h5>Выбранный маршрут:</h5>
+                    <p><strong>@Model.RouteInfo</strong></p>
+                    @if (!string.IsNullOrEmpty(Model.RouteStops))
+                    {
+                        <p><small>@Model.RouteStops</small></p>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="form-group mb-3">
+                    <label asp-for="RouteId" class="control-label fw-bold">Маршрут</label>
+                    <select asp-for="RouteId" class="form-control" asp-items="ViewBag.Routes">
+                        <option value="">-- Выберите маршрут --</option>
+                    </select>
+                    <span asp-validation-for="RouteId" class="text-danger"></span>
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="StartTime" class="control-label fw-bold">Время отправления</label>
+                        <input asp-for="StartTime" class="form-control" type="datetime-local"
+                               value="@Model.StartTime.ToString("yyyy-MM-ddTHH:mm")" />
+                        <span asp-validation-for="StartTime" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="EndTime" class="control-label fw-bold">Время прибытия</label>
+                        <input asp-for="EndTime" class="form-control" type="datetime-local"
+                               value="@Model.EndTime.ToString("yyyy-MM-ddTHH:mm")" />
+                        <span asp-validation-for="EndTime" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Start_time" class="control-label"></label>
-                <input asp-for="Start_time" class="form-control" />
-                <span asp-validation-for="Start_time" class="text-danger"></span>
+
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold">Доступные транспортные средства</label>
+                <p class="text-muted small">
+                    <i class="bi bi-info-circle"></i>
+                    Транспортное средство становится недоступным после назначения на любой рейс
+                </p>
+
+                @if (Model.AvailableVehicles != null && Model.AvailableVehicles.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 50px">Выбрать</th>
+                                    <th>Транспортное средство</th>
+                                    <th class="text-center">Всего мест</th>
+                                    <th class="text-center">Свободно</th>
+                                    <th>Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var vehicle in Model.AvailableVehicles)
+                                {
+                                    var isDisabled = vehicle.IsAssigned;
+                                    <tr class="@(isDisabled ? "table-secondary text-muted" : "")">
+                                        <td class="text-center">
+                                            @if (!isDisabled)
+                                            {
+                                                <input type="radio" name="AssignedVehicleId" value="@vehicle.VehicleId"
+                                                       @(Model.AssignedVehicleId == vehicle.VehicleId ? "checked" : "")
+                                                       @(isDisabled ? "disabled" : "") />
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">✗</span>
+                                            }
+                                        </td>
+                                        <td>@vehicle.VehicleInfo</td>
+                                        <td class="text-center">@vehicle.TotalSeats</td>
+                                        <td class="text-center">
+                                            <span class="badge @(vehicle.AvailableSeats > 0 ? "bg-success" : "bg-danger")">
+                                                @vehicle.AvailableSeats
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @if (isDisabled)
+                                            {
+                                                <span class="badge bg-secondary">Назначен на другой рейс</span>
+                                            }
+                                            else if (vehicle.AvailableSeats > 0)
+                                            {
+                                                <span class="badge bg-success">Доступно</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning text-dark">Нет свободных мест</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @if (!Model.AvailableVehicles.Any(v => !v.IsAssigned && v.AvailableSeats > 0))
+                    {
+                        <div class="alert alert-warning mt-2">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <strong>Нет доступных транспортных средств!</strong><br />
+                            Все транспортные средства либо назначены на другие рейсы, либо не имеют свободных мест.
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                        Нет доступных транспортных средств. Сначала создайте транспортное средство.
+                    </div>
+                }
+
+                <span asp-validation-for="AssignedVehicleId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="End_time" class="control-label"></label>
-                <input asp-for="End_time" class="form-control" />
-                <span asp-validation-for="End_time" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Assigned_vehicle" class="control-label"></label>
-                <input asp-for="Assigned_vehicle" class="form-control" />
-                <span asp-validation-for="Assigned_vehicle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="form-group mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Создать рейс
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Назад к списку
+                </a>
             </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Информация о назначении транспорта</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Важно:</strong> Транспортное средство может быть назначено только на один рейс.</p>
 
+                <h6 class="mt-3">Статусы транспортных средств:</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <span class="badge bg-success">Доступно</span> - можно назначить на этот рейс
+                    </li>
+                    <li class="mb-2">
+                        <span class="badge bg-secondary">Назначен на другой рейс</span> - уже используется в другом рейсе
+                    </li>
+                    <li class="mb-2">
+                        <span class="badge bg-warning text-dark">Нет свободных мест</span> - все места забронированы
+                    </li>
+                </ul>
+
+                <div class="alert alert-light mt-3">
+                    <strong>Всего транспортных средств:</strong> @Model.AvailableVehicles.Count<br />
+                    <strong>Доступно для назначения:</strong> @Model.AvailableVehicles.Count(v => !v.IsAssigned && v.AvailableSeats > 0)<br />
+                    <strong>Уже назначены:</strong> @Model.AvailableVehicles.Count(v => v.IsAssigned)
+                </div>
+            </div>
+        </div>
+    </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

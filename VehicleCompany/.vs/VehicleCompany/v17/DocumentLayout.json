@@ -3,12 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\accounts\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\accounts\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\controllers\\vehiclescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:controllers\\vehiclescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\viewmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\viewmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\authorization.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\authorization.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\controllers\\tripscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:controllers\\tripscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\controllers\\routescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:controllers\\routescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\trips\\finishconfirmed.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\trips\\finishconfirmed.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\trips\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -19,12 +55,36 @@
       "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\trips\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\vehicles\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\vehicles\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\routes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\routes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\controllers\\vehiclescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:controllers\\vehiclescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\trip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\trip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\models\\stop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:models\\stop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\routes\\booktrip.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\routes\\booktrip.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|c:\\users\\der11\\documents\\github\\course_project_jdanovai_pri_123_autotransportnoie_predpriiatie\\vehiclecompany\\views\\vehicles\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{177B4143-F303-48F4-99B1-8478BAE368DB}|VehicleCompany.csproj|solutionrelative:views\\vehicles\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,11 +94,128 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
+              "Title": "Booking.cs",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Booking.cs",
+              "RelativeDocumentMoniker": "Models\\Booking.cs",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Booking.cs",
+              "RelativeToolTip": "Models\\Booking.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T08:38:23.738Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\AccountController.cs",
+              "ViewState": "AgIAALEAAAAAAAAAAAAYwOIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T08:29:40.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Profile.cshtml",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Accounts\\Profile.cshtml",
+              "RelativeDocumentMoniker": "Views\\Accounts\\Profile.cshtml",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Accounts\\Profile.cshtml",
+              "RelativeToolTip": "Views\\Accounts\\Profile.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-06T08:26:18.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Authorization.cs",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Authorization.cs",
+              "RelativeDocumentMoniker": "Models\\Authorization.cs",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Authorization.cs",
+              "RelativeToolTip": "Models\\Authorization.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T08:26:05.038Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAAAKYAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T08:25:17.139Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Users\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Views\\Users\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Users\\Edit.cshtml",
+              "RelativeToolTip": "Views\\Users\\Edit.cshtml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAABcAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-06T07:05:18.924Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "BookTrip.cshtml",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Routes\\BookTrip.cshtml",
+              "RelativeDocumentMoniker": "Views\\Routes\\BookTrip.cshtml",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Routes\\BookTrip.cshtml",
+              "RelativeToolTip": "Views\\Routes\\BookTrip.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-06T07:04:22.398Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Controllers\\UsersController.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAwwBsAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T07:01:47.689Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "RoutesController.cs",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\RoutesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\RoutesController.cs",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\RoutesController.cs",
+              "RelativeToolTip": "Controllers\\RoutesController.cs",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAqwKIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T07:00:40.304Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Vehicles\\Delete.cshtml",
               "RelativeDocumentMoniker": "Views\\Vehicles\\Delete.cshtml",
@@ -46,64 +223,141 @@
               "RelativeToolTip": "Views\\Vehicles\\Delete.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-06T05:54:12.879Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-06T05:54:12.879Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "VehiclesController.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\VehiclesController.cs",
               "RelativeDocumentMoniker": "Controllers\\VehiclesController.cs",
               "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\VehiclesController.cs",
               "RelativeToolTip": "Controllers\\VehiclesController.cs",
-              "ViewState": "AgIAAKcAAAAAAAAAAAAkwLAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-06T05:05:07.743Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T07:20:55.194Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ViewModels.cs",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\ViewModels.cs",
+              "RelativeDocumentMoniker": "Models\\ViewModels.cs",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\ViewModels.cs",
+              "RelativeToolTip": "Models\\ViewModels.cs",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAjwH0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T07:13:15.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Routes\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Routes\\Index.cshtml",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Routes\\Index.cshtml",
+              "RelativeToolTip": "Views\\Routes\\Index.cshtml",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAF4AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-06T07:06:16.959Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FinishConfirmed.cshtml",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Trips\\FinishConfirmed.cshtml",
+              "RelativeDocumentMoniker": "Views\\Trips\\FinishConfirmed.cshtml",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Trips\\FinishConfirmed.cshtml",
+              "RelativeToolTip": "Views\\Trips\\FinishConfirmed.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-06T07:46:00.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "TripsController.cs",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\TripsController.cs",
               "RelativeDocumentMoniker": "Controllers\\TripsController.cs",
               "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Controllers\\TripsController.cs",
               "RelativeToolTip": "Controllers\\TripsController.cs",
-              "ViewState": "AgIAALUAAAAAAAAAAAAAANMAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAEsBAAAAAAAAAAAAADIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-06T01:21:40Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 11,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Trips\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Trips\\Index.cshtml",
               "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Trips\\Index.cshtml",
               "RelativeToolTip": "Views\\Trips\\Index.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAADYAAABJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-03-06T01:21:24.573Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 12,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Trips\\Create.cshtml",
               "RelativeDocumentMoniker": "Views\\Trips\\Create.cshtml",
               "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Trips\\Create.cshtml",
               "RelativeToolTip": "Views\\Trips\\Create.cshtml",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAAALIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-03-06T01:21:23.699Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 14,
+              "Title": "Trip.cs",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Trip.cs",
+              "RelativeDocumentMoniker": "Models\\Trip.cs",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Trip.cs",
+              "RelativeToolTip": "Models\\Trip.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T07:20:49.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Stop.cs",
+              "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Stop.cs",
+              "RelativeDocumentMoniker": "Models\\Stop.cs",
+              "ToolTip": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Models\\Stop.cs",
+              "RelativeToolTip": "Models\\Stop.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T07:20:53.189Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\der11\\Documents\\GitHub\\course_project_JdanovAI_PRI_123_Autotransportnoie_predpriiatie\\VehicleCompany\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
@@ -111,8 +365,7 @@
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAACAAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-05T21:16:15.7Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-05T21:16:15.7Z"
             }
           ]
         }

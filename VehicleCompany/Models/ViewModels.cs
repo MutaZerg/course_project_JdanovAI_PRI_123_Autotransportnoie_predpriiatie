@@ -71,4 +71,57 @@ namespace VehicleCompany.Models
 
         public List<RoleSelectionViewModel> Roles { get; set; } = new List<RoleSelectionViewModel>();
     }
+
+
+    public class TripCreateViewModel
+    {
+        public long Id { get; set; }
+
+        [Required(ErrorMessage = "Выберите маршрут")]
+        [Display(Name = "Маршрут")]
+        public long RouteId { get; set; }
+
+        [Required(ErrorMessage = "Укажите время отправления")]
+        [Display(Name = "Время отправления")]
+        [DataType(DataType.DateTime)]
+        public DateTime StartTime { get; set; } = DateTime.Now.AddHours(1);
+
+        [Required(ErrorMessage = "Укажите время прибытия")]
+        [Display(Name = "Время прибытия")]
+        [DataType(DataType.DateTime)]
+        public DateTime EndTime { get; set; } = DateTime.Now.AddHours(2);
+
+        [Display(Name = "Транспортное средство")]
+        public long AssignedVehicleId { get; set; }
+
+        // Display properties
+        public string? RouteInfo { get; set; }
+        public string? RouteStops { get; set; }
+
+        // List of available vehicles (only unassigned ones)
+        public List<AvailableVehicleViewModel> AvailableVehicles { get; set; } = new();
+    }
+
+    public class AvailableVehicleViewModel
+    {
+        public long VehicleId { get; set; }
+        public string VehicleInfo { get; set; } = string.Empty;
+        public int TotalSeats { get; set; }
+        public int AvailableSeats { get; set; }
+        public bool IsAssigned { get; set; } // New property to indicate if vehicle is already assigned
+    }
+
+    public class UserBookingViewModel
+    {
+        public long BookingId { get; set; }
+        public long TripId { get; set; }
+        public string TripName { get; set; } = string.Empty;
+        public DateTime DepartureTime { get; set; }
+        public DateTime ArrivalTime { get; set; }
+        public string RouteInfo { get; set; } = string.Empty;
+        public string VehicleInfo { get; set; } = string.Empty;
+        public int SeatNumber { get; set; }
+        public DateTime BookingDate { get; set; }
+        public string Status { get; set; } = string.Empty;
+    }
 }

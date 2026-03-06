@@ -1,0 +1,42 @@
+﻿@model VehicleCompany.Models.Trip
+
+@{
+    ViewData["Title"] = "Finish Trip";
+}
+
+<h1>Завершить поездку</h1>
+
+<div>
+    <h4>Детали поездки</h4>
+    <hr />
+    <dl class="row">
+
+        <dt class="col-sm-3">
+            Начинается
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Start_time)
+        </dd>
+
+        <dt class="col-sm-3">
+            Завершается
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.End_time)
+        </dd>
+    </dl>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="FinishConfirmed" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to finish this trip? This action cannot be undone!')">
+                    <i class="fas fa-flag-checkered"></i> Завершить поездку
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

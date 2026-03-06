@@ -75,53 +75,6 @@ namespace VehicleCompany.Controllers
             return View(paginatedResults);
         }
 
-
-        //public async Task<IActionResult> Index(string first_stop,
-        //    string second_stop,
-        //    int? pageNumber,
-        //    int pageSize = 10)
-        //{
-        //    ViewBag.PageNumber = pageNumber ?? 1;
-
-        //    var search_results = new List<Route>();
-        //    if (first_stop != null && second_stop != null)
-        //    {
-        //        var query = @"
-        //        SELECT 
-        //        r.id as RouteId,
-        //        r.travel_time as Travel_time,
-        //        r.price as Price
-        //        FROM Route r
-        //        INNER JOIN Route_stop rs ON rs.route_id = r.id
-        //        INNER JOIN Stop s ON s.id = rs.stop_id AND s.name = "
-        //        + @first_stop +
-        //        "INNER JOIN Route_stop rs2 ON rs2.route_id = r.id INNER JOIN Stop s2 ON s2.id = rs2.stop_id AND s2.name ="
-        //        + @second_stop +
-        //        "WHERE rs.stop_number < rs2.stop_number";
-
-        //        search_results = _context.Database
-        //            .SqlQueryRaw<Route>(query)
-        //            .Skip(((pageNumber ?? 1) - 1) * pageSize)
-        //            .Take(pageSize)
-        //            .ToList()
-        //            ;
-        //    }
-        //    else
-        //    {
-        //        search_results = _context.Database
-        //            .SqlQueryRaw<Route>(@"Select * from Route")
-        //            .Skip(((pageNumber ?? 1) - 1) * pageSize)
-        //            .Take(pageSize)
-        //            .ToList();
-        //    }
-
-        //    // Пагинация
-        //    var totalItems = search_results.Count();
-        //    ViewBag.TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-
-        //    return View(search_results);
-        //}
-
         // GET: Routes/Details/5
         public async Task<IActionResult> Details(long? id)
         {
@@ -338,5 +291,36 @@ namespace VehicleCompany.Controllers
         {
             return _context.Route.Any(e => e.Id == id);
         }
+
+
+        //[HttpGet]
+        //[Authorize]
+        //[Permission("create_trip")]
+        //public async Task<IActionResult> CreateTrip(long? id)
+        //{
+        //    if (id == null) return NotFound();
+        //    var route = await _context.Route
+        //        .Include(r => r.RouteStops)
+        //        .ThenInclude(rs => rs.Stop)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (route == null) return NotFound();
+
+        //    var trips = await _context.Trip
+        //        .Where(t => t.Route_id == id.Value)
+        //        .OrderBy(t => t.Start_time)
+        //        .ToListAsync();
+
+        //    var vm = new Trip();
+        //    foreach (var trip in trips)
+        //    {
+        //        var seats = await _context.Seat
+        //            .Where(s => s.AssignedVehicleId == trip.Assigned_vehicle && !s.IsBooked)
+        //            .OrderBy(s => s.Id)
+        //            .ToListAsync();
+        //        vm.TripsWithSeats.Add(new TripSeatsViewModel { Trip = trip, AvailableSeats = seats });
+        //    }
+
+        //    return View(vm);
+        //}
     }
 }
