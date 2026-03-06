@@ -3,32 +3,40 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
-
-<h4>Vehicle</h4>
+<h4>Изменить транспорт</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" id="vehicleForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
-                <label asp-for="Vehicle_info" class="control-label"></label>
+                <label asp-for="Vehicle_info" class="control-label">Название транспорта</label>
                 <input asp-for="Vehicle_info" class="form-control" />
                 <span asp-validation-for="Vehicle_info" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label for="numberOfSeats" class="control-label">Количество мест</label>
+                <input type="number" id="numberOfSeats" name="numberOfSeats" class="form-control"
+                       min="1" value="@Model.Seats?.Count() ?? 4" required />
+                <small class="form-text text-muted">Установить каоличество мест</small>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Назад</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

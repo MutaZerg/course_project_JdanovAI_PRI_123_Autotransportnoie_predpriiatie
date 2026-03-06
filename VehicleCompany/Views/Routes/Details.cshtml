@@ -3,23 +3,27 @@
 @{
     ViewData["Title"] = "Route Details";
 }
-
-<h1>Route Details</h1>
+@{
+    var userPermissions = User.Claims
+        .Where(c => c.Type == "Permission")
+        .Select(c => c.Value)
+        .ToList();
+}
+<h1>Подробности маршрута</h1>
 
 <div>
-    <h4>Route</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">Travel time</dt>
+        <dt class="col-sm-2">Продолжительность</dt>
         <dd class="col-sm-10">@Model.Travel_time</dd>
-        <dt class="col-sm-2">Price</dt>
+        <dt class="col-sm-2">Цена</dt>
         <dd class="col-sm-10">@Model.Price</dd>
-        <dt class="col-sm-2">Stops</dt>
+        <dt class="col-sm-2">Остановки</dt>
         <dd class="col-sm-10">
             @if (Model.RouteStops?.Any() == true)
             {
                 <ol class="mb-0">
-                    @foreach (var rs in Model.RouteStops.OrderBy(rs => rs.StopId))
+                    @foreach (var rs in Model.RouteStops.OrderBy(rs => rs.stop_number))
                     {
                         <li>@(rs.Stop?.Name ?? "—")</li>
                     }
@@ -27,13 +31,16 @@
             }
             else
             {
-                <span>No stops defined.</span>
+                <span>Нет остановок.</span>
             }
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="BookTrip" asp-route-id="@Model?.Id" class="btn btn-success">Book a trip</a> |
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="BookTrip" asp-route-id="@Model?.Id" class="btn btn-success">Забронировать поездку</a> |
+    @if (userPermissions.Contains("edit_route"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Изменить поездку</a>
+    }
+    <a asp-action="Index">Назад</a>
 </div>

@@ -12,7 +12,8 @@
     var selectedStopIds = ViewBag.SelectedStopIds as List<long> ?? new List<long>();
 
     // Получаем выбранные остановки из модели с учетом stop_number
-    var routeStops = new List<Stop>();
+    var stops_on_route = new List<Stop>();
+    var routeStops = new List<RouteStop>();
     var stopNumbers = new Dictionary<long, int>();
 
     if (Model.RouteStops != null && Model.RouteStops.Any())
@@ -22,7 +23,7 @@
             .OrderBy(rs => rs.stop_number)
             .ToList();
 
-        routeStops = orderedStops.Select(rs => rs.Stop!).ToList();
+        stops_on_route = orderedStops.Select(rs => rs.Stop!).ToList();
 
         foreach (var rs in orderedStops)
         {
@@ -33,14 +34,10 @@
         }
     }
 }
-<h1>Edit</h1>
+<h1>Изменить маршрут</h1>
 <div>
-    <div>Available stops count: @availableStops.Count</div>
-    <div>Selected stop IDs: @string.Join(", ", selectedStopIds)</div>
-    <div>Route stops count: @routeStops.Count</div>
+    <div>Количество остановок: @stops_on_route.Count</div>
 </div>
-<h4>Route</h4>
-<hr />
 
 <div class="row">
     <div class="col-md-6">
@@ -49,17 +46,17 @@
             <input type="hidden" asp-for="Id" />
 
             <div class="form-group mb-3">
-                <label asp-for="Travel_time" class="control-label fw-bold"></label>
+                <label asp-for="Travel_time" class="control-label fw-bold">Продолжительность поездки</label>
                 <input asp-for="Travel_time" class="form-control" type="time" step="1"
                        value="@Model.Travel_time.ToString(@"hh\:mm\:ss")" />
                 <span asp-validation-for="Travel_time" class="text-danger"></span>
-                <small class="form-text text-muted">Format: HH:MM:SS</small>
+                <small class="form-text text-muted">Формат: ЧЧ:MM:СС</small>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="Price" class="control-label fw-bold"></label>
+                <label asp-for="Price" class="control-label fw-bold">Цена</label>
                 <div class="input-group">
-                    <span class="input-group-text">$</span>
+                    <span class="input-group-text">₽</span>
                     <input asp-for="Price" class="form-control" type="number" min="0" step="1" />
                 </div>
                 <span asp-validation-for="Price" class="text-danger"></span>
@@ -67,22 +64,19 @@
 
             <hr />
 
-            <h4>Route Stops</h4>
-            <p class="text-muted">Select stops in the order they appear on the route</p>
-
             <!-- Selected Stops List -->
             <div class="card mb-3">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-geo-alt-fill"></i> Selected Stops</span>
-                    <span class="badge bg-light text-dark" id="stopCount">@routeStops.Count stops</span>
+                    <span><i class="bi bi-geo-alt-fill"></i> Выбранные остановки</span>
+                    <span class="badge bg-light text-dark" id="stopCount">@stops_on_route.Count Остановки</span>
                 </div>
                 <div class="card-body">
                     <ul class="list-group" id="selectedStopsList">
-                        @if (routeStops.Any())
+                        @if (stops_on_route.Any())
                         {
-                            for (int i = 0; i < routeStops.Count; i++)
+                            for (int i = 0; i < stops_on_route.Count; i++)
                             {
-                                var stop = routeStops[i];
+                                var stop = stops_on_route[i];
                                 var stopNumber = stopNumbers.ContainsKey(stop.Id) ? stopNumbers[stop.Id] : i + 1;
                                 <li class="list-group-item d-flex justify-content-between align-items-center"
                                     data-stop-id="@stop.Id" data-stop-number="@stopNumber">
@@ -98,7 +92,7 @@
                                             Раньше
                                         </button>
                                         <button type="button" class="btn btn-sm btn-outline-primary move-stop me-1"
-                                                onclick="moveStop(this, 'down')" @(i == routeStops.Count - 1 ? "disabled" : "")>
+                                                onclick="moveStop(this, 'down')" @(i == stops_on_route.Count - 1 ? "disabled" : "")>
                                             Позже
                                         </button>
                                         <button type="button" class="btn btn-sm btn-outline-danger remove-stop"
@@ -121,10 +115,11 @@
                 </div>
             </div>
 
+
             <!-- Available Stops -->
             <div class="card">
                 <div class="card-header bg-success text-white">
-                    <i class="bi bi-plus-circle"></i> Available Stops
+                    <i class="bi bi-plus-circle"></i> Остановки
                 </div>
                 <div class="card-body">
                     @if (availableStops.Any())
@@ -139,7 +134,7 @@
                         <div class="row" id="availableStopsContainer">
                             @foreach (var stop in availableStops)
                             {
-                                var isSelected = routeStops.Any(s => s.Id == stop.Id) || selectedStopIds.Contains(stop.Id);
+                                var isSelected = stops_on_route.Any(s => s.Id == stop.Id) || selectedStopIds.Contains(stop.Id);
                                 <div class="col-md-6 mb-2 stop-item"
                                      data-stop-name="@stop.Name.ToLower()"
                                      data-stop-id="@stop.Id">
@@ -150,21 +145,21 @@
                                                 @stop.Name
                                                 @if (isSelected)
                                                 {
-                                                    <span class="badge bg-success ms-2">Added</span>
+                                                    <span class="badge bg-success ms-2">Добавленна</span>
                                                 }
                                             </div>
                                             @if (!isSelected)
                                             {
-                                                <button type="button" class="btn btn-sm btn-success add-stop"
+                                                <button type="button" style="float: right;" class="btn btn-sm btn-success add-stop"
                                                         onclick="addStop(@stop.Id, '@stop.Name')">
-                                                    <i class="bi bi-plus"></i> Add
+                                                    <i class="bi bi-plus"></i> Добавить
                                                 </button>
                                             }
                                             else
                                             {
-                                                <button type="button" class="btn btn-sm btn-outline-danger remove-stop-btn"
+                                                <button type="button" style="float: right;" class="btn btn-sm btn-outline-danger remove-stop-btn"
                                                         onclick="removeStopById(@stop.Id, '@stop.Name')">
-                                                    <i class="bi bi-dash"></i> Remove
+                                                    <i class="bi bi-dash"></i> Убрать
                                                 </button>
                                             }
                                         </div>
@@ -180,8 +175,8 @@
                     else
                     {
                         <div class="alert alert-warning mb-0">
-                            <i class="bi bi-exclamation-triangle"></i> No stops available.
-                            <a asp-controller="Stops" asp-action="Create">Create stops first</a>.
+                            <i class="bi bi-exclamation-triangle"></i> Нет остановок.
+                            <a asp-controller="Stops" asp-action="Create">Создать остановки</a>.
                         </div>
                     }
                 </div>
@@ -189,63 +184,63 @@
 
             <hr />
 
+            <!-- Preview Column -->
+            <div class="col-md-6">
+                <div class="card sticky-top" style="top: 20px;">
+                    <div class="card-header bg-info text-white">
+                        <i class="bi bi-eye"></i> Preview
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Продолжительность:</th>
+                                <td id="previewTravelTime">@Model.Travel_time.ToString(@"hh\:mm\:ss")</td>
+                            </tr>
+                            <tr>
+                                <th>Цена:</th>
+                                <td id="previewPrice">$@Model.Price</td>
+                            </tr>
+                            <tr>
+                                <th>Количество остановок:</th>
+                                <td id="previewStopCount">@stops_on_route.Count</td>
+                            </tr>
+                        </table>
+
+                        <h6>Последовательность остановок:</h6>
+                        <ol class="list-group list-group-numbered" id="previewStopsList">
+                            @if (stops_on_route.Any())
+                            {
+                                for (int i = 0; i < stops_on_route.Count; i++)
+                                {
+                                    var stop = stops_on_route[i];
+                                    var stopNumber = stopNumbers.ContainsKey(stop.Id) ? stopNumbers[stop.Id] : i + 1;
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        @stop.Name
+                                        <span class="badge bg-info">Остановка #@stopNumber</span>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li class="list-group-item text-muted text-center">На маршруте нет остановок</li>
+                            }
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group mt-3">
                 <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-save"></i> Save Changes
+                    <i class="bi bi-save"></i> Сохранить
                 </button>
                 <a asp-action="Index" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left"></i> Back to List
+                    <i class="bi bi-arrow-left"></i> Назад
                 </a>
             </div>
         </form>
     </div>
     </div>
 
-    <!-- Preview Column -->
-<div class="col-md-6">
-    <div class="card sticky-top" style="top: 20px;">
-        <div class="card-header bg-info text-white">
-            <i class="bi bi-eye"></i> Route Preview
-        </div>
-        <div class="card-body">
-            <h5>Route Details:</h5>
-            <table class="table table-sm">
-                <tr>
-                    <th>Travel Time:</th>
-                    <td id="previewTravelTime">@Model.Travel_time.ToString(@"hh\:mm\:ss")</td>
-                </tr>
-                <tr>
-                    <th>Price:</th>
-                    <td id="previewPrice">$@Model.Price</td>
-                </tr>
-                <tr>
-                    <th>Total Stops:</th>
-                    <td id="previewStopCount">@routeStops.Count</td>
-                </tr>
-            </table>
-
-            <h6>Stop Sequence:</h6>
-            <ol class="list-group list-group-numbered" id="previewStopsList">
-                @if (routeStops.Any())
-                {
-                    for (int i = 0; i < routeStops.Count; i++)
-                    {
-                        var stop = routeStops[i];
-                        var stopNumber = stopNumbers.ContainsKey(stop.Id) ? stopNumbers[stop.Id] : i + 1;
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            @stop.Name
-                            <span class="badge bg-info">Stop #@stopNumber</span>
-                        </li>
-                    }
-                }
-                else
-                {
-                    <li class="list-group-item text-muted text-center">No stops in route</li>
-                }
-            </ol>
-        </div>
-    </div>
-</div>
 
 @section Scripts {
     @{
@@ -355,10 +350,10 @@
                     <div>
                         <i class="bi bi-geo-alt me-2"></i>
                         ${stopName}
-                        <span class="badge bg-success ms-2">Added</span>
+                        <span style="float: right;" class="badge bg-success ms-2">Добавленна</span>
                     </div>
-                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeStopById(${stopId}, '${stopName}')">
-                        <i class="bi bi-dash"></i> Remove
+                    <button type="button" style="float: right;" class="btn btn-sm btn-outline-danger" onclick="removeStopById(${stopId}, '${stopName}')">
+                        <i class="bi bi-dash"></i> Убрать
                     </button>
                 </div>
             `);
@@ -384,8 +379,8 @@
                         <i class="bi bi-geo-alt me-2"></i>
                         ${stopName}
                     </div>
-                    <button type="button" class="btn btn-sm btn-success" onclick="addStop(${stopId}, '${stopName}')">
-                        <i class="bi bi-plus"></i> Add
+                    <button type="button" style="float: right;" class="btn btn-sm btn-success" onclick="addStop(${stopId}, '${stopName}')">
+                        <i class="bi bi-plus"></i> Добавить
                     </button>
                 </div>
             `);
@@ -394,7 +389,7 @@
             if ($('#selectedStopsList').children().length === 0) {
                 $('#selectedStopsList').html(`
                     <li class="list-group-item text-center text-muted" id="noStopsMessage">
-                        <i class="bi bi-geo-alt"></i> No stops selected. Add stops from the list below.
+                        <i class="bi bi-geo-alt"></i> ?Нет выбранных остановок.
                     </li>
                 `);
             }

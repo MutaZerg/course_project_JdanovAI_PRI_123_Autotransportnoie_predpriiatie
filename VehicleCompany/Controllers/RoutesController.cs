@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,54 +25,102 @@ namespace VehicleCompany.Controllers
         }
 
         // GET: Routes
-        public async Task<IActionResult> Index(string sortOrder,
-            string sortBy,
-            string searchString,
+
+        public async Task<IActionResult> Index(string first_stop,
+            string second_stop,
             int? pageNumber,
             int pageSize = 10)
         {
-            ViewBag.CurrentSortOrder = sortOrder;
-            ViewBag.CurrentSortBy = sortBy;
-            ViewBag.CurrentFilter = searchString;
             ViewBag.PageNumber = pageNumber ?? 1;
+            ViewBag.FirstStop = first_stop;
+            ViewBag.SecondStop = second_stop;
 
-            var routes = _context.Route
-                .Include(r => r.RouteStops)
-                    .ThenInclude(rs => rs.Stop)
-                .AsQueryable();
+            IQueryable<Route> search_results;
 
-            // Поиск по названию остановки
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(first_stop) && !string.IsNullOrEmpty(second_stop))
             {
-                routes = routes.Where(r => r.RouteStops
-                    .Any(rs => rs.Stop.Name.Contains(searchString)));
+                var query = @"
+            SELECT DISTINCT r.* 
+            FROM Route r
+            INNER JOIN Route_stop rs ON rs.route_id = r.id
+            INNER JOIN Stop s ON s.id = rs.stop_id AND s.name = {0}
+            INNER JOIN Route_stop rs2 ON rs2.route_id = r.id
+            INNER JOIN Stop s2 ON s2.id = rs2.stop_id AND s2.name = {1}
+            WHERE rs.stop_number < rs2.stop_number";
+
+                search_results = _context.Route
+                    .FromSqlRaw(query, first_stop, second_stop)
+                    .Include(r => r.RouteStops)
+                        .ThenInclude(rs => rs.Stop)
+                    .AsQueryable();
+            }
+            else
+            {
+                search_results = _context.Route
+                    .Include(r => r.RouteStops)
+                        .ThenInclude(rs => rs.Stop)
+                    .AsQueryable();
             }
 
-            // Сортировка
-            routes = sortBy switch
-            {
-                "travel_time" => sortOrder == "asc"
-                    ? routes.OrderBy(r => r.Travel_time)
-                    : routes.OrderByDescending(r => r.Travel_time),
-                "price" => sortOrder == "asc"
-                    ? routes.OrderBy(r => r.Price)
-                    : routes.OrderByDescending(r => r.Price),
-                "stops" => sortOrder == "asc"
-                    ? routes.OrderBy(r => r.RouteStops.Count)
-                    : routes.OrderByDescending(r => r.RouteStops.Count),
-                _ => routes.OrderBy(r => r.Id)
-            };
-
-            // Пагинация
-            var totalItems = await routes.CountAsync();
+            // Get total count before pagination
+            var totalItems = await search_results.CountAsync();
             ViewBag.TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-            var items = await routes
+            // Apply pagination
+            var paginatedResults = await search_results
                 .Skip(((pageNumber ?? 1) - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-            return View(await _context.Route.ToListAsync());
+
+            return View(paginatedResults);
         }
+
+
+        //public async Task<IActionResult> Index(string first_stop,
+        //    string second_stop,
+        //    int? pageNumber,
+        //    int pageSize = 10)
+        //{
+        //    ViewBag.PageNumber = pageNumber ?? 1;
+
+        //    var search_results = new List<Route>();
+        //    if (first_stop != null && second_stop != null)
+        //    {
+        //        var query = @"
+        //        SELECT 
+        //        r.id as RouteId,
+        //        r.travel_time as Travel_time,
+        //        r.price as Price
+        //        FROM Route r
+        //        INNER JOIN Route_stop rs ON rs.route_id = r.id
+        //        INNER JOIN Stop s ON s.id = rs.stop_id AND s.name = "
+        //        + @first_stop +
+        //        "INNER JOIN Route_stop rs2 ON rs2.route_id = r.id INNER JOIN Stop s2 ON s2.id = rs2.stop_id AND s2.name ="
+        //        + @second_stop +
+        //        "WHERE rs.stop_number < rs2.stop_number";
+
+        //        search_results = _context.Database
+        //            .SqlQueryRaw<Route>(query)
+        //            .Skip(((pageNumber ?? 1) - 1) * pageSize)
+        //            .Take(pageSize)
+        //            .ToList()
+        //            ;
+        //    }
+        //    else
+        //    {
+        //        search_results = _context.Database
+        //            .SqlQueryRaw<Route>(@"Select * from Route")
+        //            .Skip(((pageNumber ?? 1) - 1) * pageSize)
+        //            .Take(pageSize)
+        //            .ToList();
+        //    }
+
+        //    // Пагинация
+        //    var totalItems = search_results.Count();
+        //    ViewBag.TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+        //    return View(search_results);
+        //}
 
         // GET: Routes/Details/5
         public async Task<IActionResult> Details(long? id)
@@ -132,8 +181,6 @@ namespace VehicleCompany.Controllers
         }
 
         // POST: Routes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -160,17 +207,18 @@ namespace VehicleCompany.Controllers
                 return NotFound();
             }
             var route = await _context.Route.FindAsync(id);
-            if (route.RouteStops != null)
-            {
-                route.RouteStops = route.RouteStops
-                    .OrderBy(rs => rs.stop_number)
-                    .ToList();
-            }
-            var availableStops = await _context.Stop
-                .OrderBy(s => s.Name)
-                .ToListAsync();
+            var query = @"
+            SELECT DISTINCT r.*
+            from Route_stop r where r.route_id = {0} order by stop_number";
 
-            // Получаем ID выбранных остановок в правильном порядке
+            route.RouteStops = _context.RouteStop
+                .FromSqlRaw(query, id)
+                .ToList();
+
+            var availableStops = await _context.Stop
+                    .OrderBy(s => s.Name)
+                    .ToListAsync();
+
             var selectedStopIds = route.RouteStops?
                 .OrderBy(rs => rs.stop_number)
                 .Select(rs => rs.StopId)
@@ -289,37 +337,6 @@ namespace VehicleCompany.Controllers
         private bool RouteExists(long id)
         {
             return _context.Route.Any(e => e.Id == id);
-        }
-
-        public IActionResult SearchRoutes(String first_stop, String second_stop)
-        {
-            var search_results = new List<Route>();
-            if (first_stop != null && second_stop != null)
-            {
-                var query = @"
-                SELECT 
-                r.id as RouteId,
-                r.travel_time as Travel_time,
-                r.price as Price
-                FROM Route r
-                INNER JOIN Route_stop rs ON rs.route_id = r.id
-                INNER JOIN Stop s ON s.id = rs.stop_id AND s.name = "
-                + @first_stop + 
-                "INNER JOIN Route_stop rs2 ON rs2.route_id = r.id INNER JOIN Stop s2 ON s2.id = rs2.stop_id AND s2.name ="
-                + @second_stop +
-                "WHERE rs.stop_number < rs2.stop_number";
-
-                search_results = _context.Database
-                    .SqlQueryRaw<Route>(query)
-                    .ToList();
-            }
-            else
-            {
-                search_results = _context.Database
-                    .SqlQueryRaw<Route>(@"Select * from Route")
-                    .ToList();
-            }
-            return View(search_results);
         }
     }
 }

@@ -15,70 +15,48 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Маршруты</h1>
 
-<div class="row mb-3">
-    <div class="col-md-6">
-        <form asp-action="Index" method="get" class="form-inline">
-            <div class="input-group">
-                <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control" placeholder="Search by stop name..." />
-                <button type="submit" class="btn btn-outline-secondary">Search</button>
-                <a asp-action="Index" class="btn btn-outline-danger">Clear</a>
+
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Найти маршруты</h5>
             </div>
-        </form>
+            <div class="card-body">
+                <form asp-action="Index" method="get" class="row g-3">
+                    <div class="col-md-5">
+                        <label for="first_stop" class="form-label">Откуда:</label>
+                        <input type="text" class="form-control" id="first_stop" name="first_stop"
+                               value="@ViewBag.FirstStop" placeholder="Введите название остановки" />
+                    </div>
+                    <div class="col-md-5">
+                        <label for="second_stop" class="form-label">Куда:</label>
+                        <input type="text" class="form-control" id="second_stop" name="second_stop"
+                               value="@ViewBag.SecondStop" placeholder="Введите название остановки" />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-search"></i> Поиск
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+    
 </div>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
+@if (userPermissions.Contains("create_route"))
+{
+    <div class="col-md-4 text-end">
+        <a asp-action="Create" class="btn btn-success mt-4">
+            <i class="bi bi-plus-circle"></i> Создать новый
+        </a>
+    </div>
+}
 <table class="table table-hover">
-    <thead class="table-dark">
-        <tr>
-            <th>
-                <a asp-action="Index"
-                   asp-route-sortOrder="@(sortBy == "travel_time" && sortOrder == "asc" ? "desc" : "asc")"
-                   asp-route-sortBy="travel_time"
-                   asp-route-searchString="@ViewBag.CurrentFilter"
-                   class="text-white text-decoration-none">
-                    @Html.DisplayNameFor(model => model.Travel_time)
-                    @if (sortBy == "travel_time")
-                    {
-                        <i class="bi bi-arrow-@(sortOrder == "asc" ? "up" : "down")"></i>
-                    }
-                </a>
-            </th>
-            <th>
-                <a asp-action="Index"
-                   asp-route-sortOrder="@(sortBy == "price" && sortOrder == "asc" ? "desc" : "asc")"
-                   asp-route-sortBy="price"
-                   asp-route-searchString="@ViewBag.CurrentFilter"
-                   class="text-white text-decoration-none">
-                    @Html.DisplayNameFor(model => model.Price)
-                    @if (sortBy == "price")
-                    {
-                        <i class="bi bi-arrow-@(sortOrder == "asc" ? "up" : "down")"></i>
-                    }
-                </a>
-            </th>
-            <th>
-                <a asp-action="Index"
-                   asp-route-sortOrder="@(sortBy == "stops" && sortOrder == "asc" ? "desc" : "asc")"
-                   asp-route-sortBy="stops"
-                   asp-route-searchString="@ViewBag.CurrentFilter"
-                   class="text-white text-decoration-none">
-                    Stops
-                    @if (sortBy == "stops")
-                    {
-                        <i class="bi bi-arrow-@(sortOrder == "asc" ? "up" : "down")"></i>
-                    }
-                </a>
-            </th>
-            <th>Stop Names</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
     <tbody>
         @foreach (var item in Model)
         {
@@ -89,13 +67,15 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Travel_time)
+                    Продолжительность
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
+                    Цена
                 </td>
                 <td>
                     <span class="badge @(stopCount > 0 ? "bg-info" : "bg-secondary")">
-                        @stopCount @(stopCount == 1 ? "stop" : "stops")
+                        @stopCount @(stopCount == 1 ? "Остоновка" : "Остоновки")
                     </span>
                 </td>
                 
@@ -103,13 +83,13 @@
                     <div class="btn-group" role="group">
                         @if (userPermissions.Contains("edit_route"))
                         {
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Изменить</a>
                         }
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
-                        <a asp-action="BookTrip" asp-route-id="@item.Id" class="btn btn-sm btn-success">Book</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Подробности</a>
+                        <a asp-action="BookTrip" asp-route-id="@item.Id" class="btn btn-sm btn-success">Забронировать поездку</a>
                         @if (userPermissions.Contains("delete_route"))
                         {
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Удалить</a>
                         }
                     </div>
                 </td>
@@ -117,37 +97,6 @@
         }
     </tbody>
 </table>
-@* <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Travel_time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Travel_time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="BookTrip" asp-route-id="@item.Id" class="btn btn-sm btn-success">Book a trip</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table> *@
 
 @if (ViewBag.TotalPages > 1)
 {
@@ -156,11 +105,8 @@
             <li class="page-item @(ViewBag.PageNumber <= 1 ? "disabled" : "")">
                 <a class="page-link"
                    asp-action="Index"
-                   asp-route-pageNumber="@(ViewBag.PageNumber - 1)"
-                   asp-route-sortOrder="@ViewBag.SortOrder"
-                   asp-route-sortBy="@ViewBag.SortBy"
-                   asp-route-searchString="@ViewBag.CurrentFilter">
-                    Previous
+                   asp-route-pageNumber="@(ViewBag.PageNumber - 1)">
+                    Предидущая
                 </a>
             </li>
 
@@ -169,10 +115,7 @@
                 <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
                     <a class="page-link"
                        asp-action="Index"
-                       asp-route-pageNumber="@i"
-                       asp-route-sortOrder="@ViewBag.SortOrder"
-                       asp-route-sortBy="@ViewBag.SortBy"
-                       asp-route-searchString="@ViewBag.CurrentFilter">
+                       asp-route-pageNumber="@i">
                         @i
                     </a>
                 </li>
@@ -181,11 +124,8 @@
             <li class="page-item @(ViewBag.PageNumber >= ViewBag.TotalPages ? "disabled" : "")">
                 <a class="page-link"
                    asp-action="Index"
-                   asp-route-pageNumber="@(ViewBag.PageNumber + 1)"
-                   asp-route-sortOrder="@ViewBag.SortOrder"
-                   asp-route-sortBy="@ViewBag.SortBy"
-                   asp-route-searchString="@ViewBag.CurrentFilter">
-                    Next
+                   asp-route-pageNumber="@(ViewBag.PageNumber + 1)">
+                    Следующая
                 </a>
             </li>
         </ul>

@@ -56,12 +56,41 @@ namespace VehicleCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Vehicle_info")] Vehicle vehicle)
+        //public async Task<IActionResult> Create([Bind("Vehicle_info")] Vehicle vehicle)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(vehicle);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(vehicle);
+        //}
+
+        public async Task<IActionResult> Create([Bind("Vehicle_info")] Vehicle vehicle, int numberOfSeats)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
+
+                // Create the specified number of seats for this vehicle
+                if (numberOfSeats > 0)
+                {
+                    var seats = new List<Seat>();
+                    for (int i = 0; i < numberOfSeats; i++)
+                    {
+                        seats.Add(new Seat
+                        {
+                            AssignedVehicleId = vehicle.Id,
+                            IsBooked = false
+                        });
+                    }
+
+                    _context.AddRange(seats);
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(vehicle);
@@ -84,14 +113,14 @@ namespace VehicleCompany.Controllers
         }
 
         // POST: Vehicles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Vehicle_info")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Vehicle_info")] Vehicle vehicle, int numberOfSeats)
         {
             if (id != vehicle.Id)
             {
+                ModelState.AddModelError("numberOfSeats",
+                               "Транспорт не найден.");
                 return NotFound();
             }
 
@@ -101,17 +130,81 @@ namespace VehicleCompany.Controllers
                 {
                     _context.Update(vehicle);
                     await _context.SaveChangesAsync();
+
+                    // Handle seats adjustment
+                    var existingSeats = _context.Seat.Where(s => s.AssignedVehicleId == vehicle.Id).ToList();
+                    var currentSeatCount = existingSeats.Count;
+
+                    if (numberOfSeats > currentSeatCount)
+                    {
+                        // Add more seats
+                        var seatsToAdd = new List<Seat>();
+                        for (int i = 0; i < numberOfSeats - currentSeatCount; i++)
+                        {
+                            seatsToAdd.Add(new Seat
+                            {
+                                AssignedVehicleId = vehicle.Id,
+                                IsBooked = false
+                            });
+                        }
+                        _context.AddRange(seatsToAdd);
+                    }
+                    else if (numberOfSeats < currentSeatCount)
+                    {
+                        var seatsToRemove = currentSeatCount - numberOfSeats;
+
+                        // First, check if we have enough unbooked seats to remove using SQL
+                        var checkSeatsSql = @"
+                    SELECT COUNT(*) 
+                    FROM Seat 
+                    WHERE assigned_vehicle = {0} AND is_booked = 0";
+
+                        var unbookedCount = await _context.Database
+                            .ExecuteSqlRawAsync(checkSeatsSql, vehicle.Id);
+
+                        // Better to use scalar query for getting count
+                        var unbookedSeatsCount = await _context.Seat
+                            .FromSqlRaw("SELECT * FROM Seat WHERE assigned_vehicle = {0} AND is_booked = 0", vehicle.Id)
+                            .CountAsync();
+
+                        if (unbookedSeatsCount < seatsToRemove)
+                        {
+                            ModelState.AddModelError("numberOfSeats",
+                                $"Cannot remove {seatsToRemove} seat(s). Only {unbookedSeatsCount} unbooked seat(s) available to remove.");
+                            vehicle.Seats = existingSeats;
+                            return View(vehicle);
+                        }
+
+
+                        // For MySQL:
+                        var deleteSql = @"
+                             DELETE FROM Seat 
+                             WHERE assigned_vehicle = {1} AND is_booked = 0
+                             ORDER BY Id
+                             LIMIT {0}";
+
+                        var rowsAffected = await _context.Database.ExecuteSqlRawAsync(deleteSql, seatsToRemove, vehicle.Id);
+
+                        TempData["SuccessMessage"] = $"Removed {rowsAffected} seat(s) from the vehicle using SQL.";
+                    }
+
+                    await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception)
                 {
+                    ModelState.AddModelError("numberOfSeats",
+               "AAAAAAAA.");
                     if (!VehicleExists(vehicle.Id))
                     {
+                        ModelState.AddModelError("numberOfSeats",
+                               "Транспорт не найден.");
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+                    else { 
+                        ModelState.AddModelError("numberOfSeats",
+                               "Транспорт не найден.");
+                    throw;
+                }
                 }
                 return RedirectToAction(nameof(Index));
             }

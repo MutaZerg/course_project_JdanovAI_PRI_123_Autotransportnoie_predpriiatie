@@ -4,6 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
+@{
+    var userPermissions = User.Claims
+        .Where(c => c.Type == "Permission")
+        .Select(c => c.Value)
+        .ToList();
+}
+
 <h1>Index</h1>
 
 <p>
@@ -46,6 +53,12 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @if (userPermissions.Contains("Finish_trip"))
+                {
+                <a asp-action="FinishConfirmed" asp-route-id="@item.Id">
+                        <i class="fas fa-flag-checkered"></i> Завершить поездку
+                </a>
+                }
             </td>
         </tr>
 }

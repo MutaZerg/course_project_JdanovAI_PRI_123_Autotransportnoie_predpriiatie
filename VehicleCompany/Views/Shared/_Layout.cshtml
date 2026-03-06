@@ -48,12 +48,6 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Index">Транспорт</a>
                             </li>
                         }
-                        @if (userPermissions.Contains("edit_vehicle"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Seats" asp-action="Index">Места</a>
-                            </li>
-                        }
                         @if (userPermissions.Contains("edit_booking"))
                         {
                             <li class="nav-item">
