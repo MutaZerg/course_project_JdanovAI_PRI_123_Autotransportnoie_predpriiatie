@@ -48,7 +48,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Index">Транспорт</a>
                             </li>
                         }
-                        @if (userPermissions.Contains("edit_booking"))
+                        @if (userPermissions.Contains("view_trips"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="Index">Бронь</a>

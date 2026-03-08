@@ -27,6 +27,6 @@ namespace VehicleCompany.Models
         // Navigation properties
         public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 
-        public List<UserBookingViewModel>? Bookings { get; set; }
+        //public List<UserBookingViewModel>? Bookings { get; set; }
     }
 }
