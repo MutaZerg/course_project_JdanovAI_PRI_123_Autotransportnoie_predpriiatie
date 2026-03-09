@@ -1,47 +1,100 @@
 ﻿@model IEnumerable<VehicleCompany.Models.Booking>
-
+@{
+    var userPermissions = User.Claims
+        .Where(c => c.Type == "Permission")
+        .Select(c => c.Value)
+        .ToList();
+    var userID = long.Parse(User.Claims
+        .Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")
+        .Select(c => c.Value)
+        .ToList()[0]);
+}
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Ваша бронь</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.User_id)
+                Пользователь
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Seat_id)
+                Место
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Trip_id)
+                Поездка
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User_id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Seat_id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Trip_id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+            @if (item.User_id == userID)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Seat_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Trip_id)
+                    </td>
+                    <td>
+                        @if (userPermissions.Contains("edit_booking"))
+        {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Изменить</a>
+        }
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Отменить</a>
+                    </td>
+                </tr>
+            }
+
 }
     </tbody>
 </table>
+@if (userPermissions.Contains("delete_booking"))
+{
+<h1>Вся бронь</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Пользователь
+            </th>
+            <th>
+                Место
+            </th>
+            <th>
+                Поездка
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seat_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Trip_id)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Изменить</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}

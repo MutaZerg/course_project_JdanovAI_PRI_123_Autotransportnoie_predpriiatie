@@ -4,9 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Trip</h4>
+<h4>Изменить поездку</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,34 +12,31 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Route_id" class="control-label"></label>
+                <label asp-for="Route_id" class="control-label">id маршрута</label>
                 <input asp-for="Route_id" class="form-control" />
                 <span asp-validation-for="Route_id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Start_time" class="control-label"></label>
+                <label asp-for="Start_time" class="control-label">Начало</label>
                 <input asp-for="Start_time" class="form-control" />
                 <span asp-validation-for="Start_time" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="End_time" class="control-label"></label>
+                <label asp-for="End_time" class="control-label">Конец</label>
                 <input asp-for="End_time" class="form-control" />
                 <span asp-validation-for="End_time" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Assigned_vehicle" class="control-label"></label>
+                <label asp-for="Assigned_vehicle" class="control-label">id назначенного транспорта</label>
                 <input asp-for="Assigned_vehicle" class="form-control" />
                 <span asp-validation-for="Assigned_vehicle" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Назад</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

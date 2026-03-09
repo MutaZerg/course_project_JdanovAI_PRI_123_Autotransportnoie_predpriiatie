@@ -84,7 +84,7 @@
                                         <span class="badge bg-secondary me-2">@(i + 1)</span>
                                         <i class="bi bi-geo-alt me-2"></i>
                                         @stop.Name
-                                        <small class="text-muted ms-2">(Stop #@stopNumber)</small>
+                                        <small class="text-muted ms-2">(Остановка #@stopNumber)</small>
                                     </div>
                                     <div>
                                         <button type="button" class="btn btn-sm btn-outline-primary move-stop me-1"
@@ -125,9 +125,9 @@
                     @if (availableStops.Any())
                     {
                         <div class="input-group mb-3">
-                            <input type="text" id="stopSearch" class="form-control" placeholder="Search stops..." />
+                            <input type="text" id="stopSearch" class="form-control" placeholder="Искать остановки..." />
                             <button class="btn btn-outline-secondary" type="button" onclick="clearSearch()">
-                                <i class="bi bi-x"></i>
+                                <i class="bi bi-x">Искать</i>
                             </button>
                         </div>
 
@@ -188,7 +188,7 @@
             <div class="col-md-6">
                 <div class="card sticky-top" style="top: 20px;">
                     <div class="card-header bg-info text-white">
-                        <i class="bi bi-eye"></i> Preview
+                        <i class="bi bi-eye"></i> Предпросмотр
                     </div>
                     <div class="card-body">
                         <table class="table table-sm">
@@ -233,8 +233,7 @@
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-save"></i> Сохранить
                 </button>
-                <a asp-action="Index" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left"></i> Назад
+                <a asp-action="Index" class="btn btn-secondary">Назад
                 </a>
             </div>
         </form>
@@ -320,7 +319,7 @@
                         <span class="badge bg-secondary me-2">${stopCount + 1}</span>
                         <i class="bi bi-geo-alt me-2"></i>
                         ${stopName}
-                        <small class="text-muted ms-2">(Stop #${nextStopNumber})</small>
+                        <small class="text-muted ms-2">(Остановка #${nextStopNumber})</small>
                     </div>
                     <div>
                         <button type="button" class="btn btn-sm btn-outline-primary move-stop me-1"
@@ -367,7 +366,7 @@
         function removeStop(button) {
             const listItem = $(button).closest('li');
             const stopId = listItem.data('stop-id');
-            const stopName = listItem.find('div:first').text().trim().replace(/^\d+\s*/, '').replace(/\(Stop #\d+\)$/, '').trim();
+            const stopName = listItem.find('div:first').text().trim().replace(/^\d+\s*/, '').replace(/\(Остановка #\d+\)$/, '').trim();
 
             listItem.remove();
 
@@ -436,7 +435,7 @@
                 const stopNameDiv = $(this).find('div:first');
                 let text = stopNameDiv.text().trim();
                 // Remove existing stop number if present
-                text = text.replace(/\s*\(Stop #\d+\)$/, '');
+                text = text.replace(/\s*\(Остановка #\d+\)$/, '');
                 // Add new stop number
                 const stopId = $(this).data('stop-id');
                 const stopNumber = index + 1;
@@ -447,7 +446,7 @@
                     <span class="badge bg-secondary me-2">${index + 1}</span>
                     <i class="bi bi-geo-alt me-2"></i>
                     ${namePart}
-                    <small class="text-muted ms-2">(Stop #${stopNumber})</small>
+                    <small class="text-muted ms-2">(Остановка #${stopNumber})</small>
                 `);
 
                 // Update hidden input name to maintain order
@@ -480,12 +479,12 @@
                 $('#selectedStopsList li').each(function(index) {
                     const stopName = $(this).find('div:first').text().trim()
                         .replace(/^\d+\s*/, '')
-                        .replace(/\s*\(Stop #\d+\)$/, '');
+                        .replace(/\s*\(Остановка #\d+\)$/, '');
                     const stopNumber = index + 1;
                     previewList.append(`
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             ${stopName}
-                            <span class="badge bg-info">Stop #${stopNumber}</span>
+                            <span class="badge bg-info">Остановка #${stopNumber}</span>
                         </li>
                     `);
                 });

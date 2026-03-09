@@ -40,7 +40,7 @@
     <a asp-action="BookTrip" asp-route-id="@Model?.Id" class="btn btn-success">Забронировать поездку</a> |
     @if (userPermissions.Contains("edit_route"))
     {
-        <a asp-action="Edit" asp-route-id="@Model?.Id">Изменить поездку</a>
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Изменить поездку</a>
     }
-    <a asp-action="Index">Назад</a>
+    <a asp-action="Index" class="btn btn-secondary">Назад</a>
 </div>

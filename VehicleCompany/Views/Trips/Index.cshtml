@@ -11,25 +11,25 @@
         .ToList();
 }
 
-<h1>Index</h1>
+<h1>Поездки</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Создать</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Route_id)
+                id маршрута
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Start_time)
+                Начало поездки
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.End_time)
+                Конец поездки
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Assigned_vehicle)
+                id назначенного транспорта
             </th>
             <th></th>
         </tr>
@@ -50,16 +50,22 @@
                 @Html.DisplayFor(modelItem => item.Assigned_vehicle)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                 
+
+    @if (userPermissions.Contains("edit_trip"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Изменить</a>
+                    }
+                    @* <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">Details</a> *@
 
 
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if (userPermissions.Contains("delete_trip"))
+                {
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" >Удалить</a>
+                    }
                 @if (userPermissions.Contains("Finish_trip"))
                 {
-                <a asp-action="FinishConfirmed" asp-route-id="@item.Id">
-                        <i class="fas fa-flag-checkered"></i> Завершить поездку
+                <a asp-action="FinishConfirmed" asp-route-id="@item.Id" class="btn btn-success">
+                            <i class="btn-check"></i> Завершить поездку
                 </a>
                 }
             </td>

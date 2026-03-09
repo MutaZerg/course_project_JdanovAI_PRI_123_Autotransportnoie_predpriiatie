@@ -5,17 +5,18 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                data-bs-toggle="dropdown" aria-expanded="false">
                 @User.Identity.Name
+
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li>
                     <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Profile">
-                        Profile
+                        Профиль
                     </a>
                 </li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
                     <a class="dropdown-item text-danger" asp-area="" asp-controller="Account" asp-action="Logout">
-                        Logout
+                        Выйти
                     </a>
                 </li>
             </ul>
@@ -25,12 +26,12 @@
     {
         <li class="nav-item">
             <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">
-                Login
+                Войти
             </a>
         </li>
         <li>
             <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">
-                Registration
+                Регистрация
             </a>
         </li>
     }
