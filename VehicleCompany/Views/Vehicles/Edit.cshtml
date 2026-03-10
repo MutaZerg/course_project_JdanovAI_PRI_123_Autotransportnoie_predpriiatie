@@ -21,19 +21,17 @@
                 <label for="numberOfSeats" class="control-label">Количество мест</label>
                 <input type="number" id="numberOfSeats" name="numberOfSeats" class="form-control"
                        min="1" value="@Model.Seats?.Count() ?? 4" required />
-                <small class="form-text text-muted">Установить каоличество мест</small>
+                <small class="form-text text-muted">Установить количество мест</small>
             </div>
 
             <div class="form-group mt-3">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Назад</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Назад</a>
-</div>
 
 @section Scripts {
     @{
